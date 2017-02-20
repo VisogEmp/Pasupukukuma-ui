@@ -13,6 +13,13 @@ public class PasupukukumaController {
 		
 		return "masters/roles";
 	}
+	@RequestMapping(value ="/home",method=RequestMethod.GET)
+	public String getHome(){
+		
+		return "masters/home";
+	}
 
+
+	
 	
 }

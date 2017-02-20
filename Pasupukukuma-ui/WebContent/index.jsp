@@ -11,6 +11,7 @@
 <center>
  <h2>Pasupukukuma-ui</h2>
  <h4><a href="/Pasupukukuma-ui/roles">Roles</a></h4>
+ <h4><a href="/Pasupukukuma-ui/home">Home</a></h4>
  </center>
 
 </body>
