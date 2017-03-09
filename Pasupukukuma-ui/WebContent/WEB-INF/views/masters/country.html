@@ -1,0 +1,269 @@
+
+<html>
+<head>
+
+<!-- <link rel="stylesheet" type="text/css" href="/Spring4HelloWorld/resources/css/master.css" /> -->
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/Pasupukukuma-ui/resources/js/country.js"></script>
+<!-- <script>
+	var app = angular.module("CountryManagement", []);
+<commit2>
+	//Controller Part
+	app
+			.controller(
+					"CountryController",
+					function($scope, $http) {
+
+						$scope.countries = [];
+						$scope.countryForm = {
+							// id : -1,
+							name : "",
+							code : "",
+							orderNum : ""
+						};
+
+						// Now load the data from server
+						_refreshCountryData();
+
+						// HTTP POST/PUT methods for add/edit role
+						// with the help of id, we are going to find out whether it
+						// is put or post operation
+
+						$scope.submitCountry = function() {
+
+							var method = "";
+							var url = "";
+							// alert($scope.genderForm.id);
+							if ($scope.countryForm.id == -1
+									|| $scope.countryForm.id == undefined) {
+								// Id is absent in form data, it is create new role
+								// operation
+
+								method = "POST";
+								url = 'http://localhost:8080/visog-job-portal-api/master/country/';
+								$http
+										.post(
+												url,
+												{
+													"name" : $scope.countryForm.name,
+													"code" : $scope.countryForm.code,
+													"orderNum" : $scope.countryForm.orderNum
+												}).then(_success, _error);
+
+							} else {
+
+								// Id is present in form data, it is edit role
+								// operation
+								id = $scope.countryForm.id;
+								method = "PUT";
+								url = 'http://localhost:8080/visog-job-portal-api/master/country/'
+										+ id;
+								$http
+										.put(
+												url,
+												{
+													"name" : $scope.countryForm.name,
+													"code" : $scope.countryForm.code,
+													"orderNum" : $scope.countryForm.orderNum
+												}).then(_success, _error);
+								$scope.countryForm.id = -1;
+							}
+							/*
+							 * $http({ method : method, url : url, data :
+							 * angular.toJson($scope.genderForm), headers : {
+							 * 'Content-Type' : 'application/json' } }).then(
+							 * _success, _error );
+							 */
+						};
+
+						// HTTP DELETE- delete role by Id
+						$scope.deleteCountry = function(country) {
+							$http(
+									{
+										method : 'DELETE',
+										url : 'http://localhost:8080/visog-job-portal-api/master/country/'
+												+ country.id
+									}).then(_success, _error);
+						};
+
+						// In case of edit, populate form fields and assign form.id
+						// with role id
+						$scope.editCountry = function(country) {
+
+							$scope.countryForm.name = country.name;
+							$scope.countryForm.code = country.code;
+							$scope.countryForm.orderNum = country.orderNum;
+							$scope.countryForm.id =country.id;
+						};
+
+						/* Private Methods */
+						// HTTP GET- get all countries collection
+						function _refreshCountryData() {
+							$http(
+									{
+										method : 'GET',
+										url : 'http://localhost:8080/visog-job-portal-api/master/country/'
+									}).then(function successCallback(response) {
+								// alert(response.data.data)
+								$scope.countrys = response.data.data;
+							}, function errorCallback(response) {
+								console.log(response.statusText);
+							});
+						}
+
+						function _success(response) {
+
+							_refreshCountryData();
+							_clearFormData()
+						}
+
+						function _error(response) {
+
+							console.log(response.statusText);
+						}
+
+						// Clear the form
+						function _clearFormData() {
+							// $scope.genderForm.id = -1;
+							$scope.countryForm.name = "";
+							$scope.countryForm.code = "";
+							$scope.countryForm.orderNum = "";
+
+						}
+						;
+					});
+</script> -->
+<style>
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+
+
+<title>AngularJS $http Rest example</title>
+<head>
+<body ng-app="CountryManagement" ng-controller="CountryController">
+	<h1>Country Master</h1>
+	<form ng-submit="submitCountry()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add/Edit Country</th>
+			</tr>
+			<tr>
+				<td>Country Name</td>
+				<td><input type="text" ng-model="countryForm.name" /></td>
+			</tr>
+
+			<tr>
+				<td>Code</td>
+				<td><input type="text" ng-model="countryForm.code" /></td>
+			</tr>
+			<!-- <tr>
+				<td>OrderNum</td>
+				<td><input type="text" ng-model="countryForm.orderNum" /></td>
+			</tr> -->
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+	<table>
+		<tr>
+
+			<th>Name</th>
+			<th>Code</th>
+			<!-- <th>OrderNum</th> -->
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="country in countrys">
+
+			<td>{{ country.name }}</td>
+			<td>{{ country.code }}</td>
+			<!-- <td>{{ country.orderNum }}</td> -->
+
+			<td><a ng-click="editCountry(country)" class="blue-button">Edit</a>
+				| <a ng-click="deleteCountry(country)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+
+	<!-- <script src="static/js/gender.js"></script> -->
+	<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+	<!-- 	<link rel="stylesheet" type="text/css" href="staic/css/master.css" media="screen" /> -->
+</body>
+</html>

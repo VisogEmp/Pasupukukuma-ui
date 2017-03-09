@@ -1,0 +1,152 @@
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/Pasupukukuma-ui/resources/css/master.css" media="screen" />
+ <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/Pasupukukuma-ui/resources/js/city.js"></script>
+<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+<!-- shatish sir -->	
+<!-- ravigfdhdtdtdtrtr -->
+<!--meher1-->
+
+<title>AngularJS $http Rest example</title>
+<style>
+.search {
+	width: 140px;
+	padding: 9px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+
+<head>
+<body ng-app="CityManagement" ng-controller="CityController">
+	<h1>CITY</h1>
+	<form ng-submit="submitCity()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add City</th>
+			</tr>
+			<tr>
+				<td>name</td>
+				<td><input type="text" ng-model="cityForm.name" /></td>
+			</tr>
+			
+			<tr>
+				<td>country</td>
+				<td><input type="text" ng-model="cityForm.country" /></td>
+			</tr>
+			<tr>
+				<td>state</td>
+				<td><input type="text" ng-model="cityForm.state" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+	
+		<label><b>SearchBox:</b></label> <input type="text" ng-model="search"
+					class="form-control search" placeholder="searchText">
+	
+	<table>
+		<tr>
+
+			<th>name</th>
+			<th>country</th>
+			<th>state</th>
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="city in cities |filter:search">
+
+			<td>{{ city.name }}</td>
+			<td>{{ city.country }}</td>
+			<td>{{ city.state }}</td>
+
+			<td><a ng-click="editCity(city)" class="blue-button">Edit</a> |
+				<a ng-click="deleteCity(city)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+</body>
+</html>

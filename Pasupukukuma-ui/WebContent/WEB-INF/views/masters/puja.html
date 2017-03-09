@@ -1,0 +1,167 @@
+<!-- prasad -->
+<html>
+<head>
+
+	<link rel="stylesheet" type="text/css" href="/visog-job-portal-ui/resources/css/master.css" media="screen" />
+
+ <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/Pasupukukuma-ui/resources/js/puja.js"></script>
+<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+	
+	
+
+<title>AngularJS $http Rest example</title>
+<style>
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+</head>
+<body ng-app="PujaManagement" ng-controller="PujaController">
+	<h1>PUJA</h1>
+	<form ng-submit="submitPuja()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add Puja</th>
+			</tr>
+			<tr>
+				<td>name</td>
+				<td><input type="text" ng-model="pujaForm.name" /></td>
+			</tr>
+			<tr>
+				<td>description</td>
+				<td><input type="text" ng-model="pujaForm.description" /></td>
+			</tr>
+			<tr>
+				<td>price</td>
+				<td><input type="text" ng-model="pujaForm.price" /></td>
+			</tr>
+			<tr>
+				<td>duration</td>
+				<td><input type="text" ng-model="pujaForm.duration" /></td>
+			</tr>
+			<tr>
+				<td>photo</td>
+				<td><input type="text" ng-model="pujaForm.photo" /></td>
+			</tr>
+			<tr>
+				<td>pujaCount</td>
+				<td><input type="text" ng-model="pujaForm.pujaCount" /></td>
+			</tr>
+			
+			
+			<tr>
+				<td>status</td>
+				<td><input type="text" ng-model="pujaForm.status" /></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+	<table>
+		<tr>
+
+			<th>name</th>
+			<th>description</th>
+			<th>price</th>
+			<th>duration</th>
+			<th>photo</th>
+			<th>pujaCount</th>
+			<th>status</th>
+			
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="puja in pujas">
+
+			<td>{{ puja.name }}</td>
+			<td>{{ puja.description }}</td>
+			<td>{{ puja.price }}</td>
+			<td>{{ puja.duration }}</td>
+			<td>{{ puja.photo }}</td>
+			<td>{{ puja.pujaCount}}</td>
+			<td>{{ puja.status }}</td>
+			
+
+			<td><a ng-click="editPuja(puja)" class="blue-button">Edit</a> |
+				<a ng-click="deletePuja(puja)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+</body>
+</html>

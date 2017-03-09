@@ -1,0 +1,146 @@
+<html>
+<head>
+
+<!-- <link rel="stylesheet" type="text/css" href="/Spring4HelloWorld/resources/css/master.css" /> -->
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/Pasupukukuma-ui/resources/js/status.js"></script>
+<style>
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+
+
+<title>AngularJS $http Rest example</title>
+<head>
+<body ng-app="StatusManagement" ng-controller="StatusController">
+	<h1>Status Master</h1>
+	<form ng-submit="submitStatus()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add/Edit Status</th>
+			</tr>
+			<tr>
+				<td>Status Name</td>
+				<td><input type="text" ng-model="statusForm.name" /></td>
+			</tr>
+
+			<tr>
+				<td>Code</td>
+				<td><input type="text" ng-model="statusForm.code" /></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><input type="text" ng-model="statusForm.description" /></td>
+			</tr>
+			<!-- <tr>
+				<td>OrderNum</td>
+				<td><input type="text" ng-model="countryForm.orderNum" /></td>
+			</tr> -->
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+	<table>
+		<tr>
+
+			<th>Name</th>
+			<th>Code</th>
+			<th>Description</th>
+			<!-- <th>OrderNum</th> -->
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="status in statuss">
+
+			<td>{{ status.name }}</td>
+			<td>{{ status.code }}</td>
+			<td>{{ status.description }}</td>
+			<!-- <td>{{ country.orderNum }}</td> -->
+
+			<td><a ng-click="editStatus(status)" class="blue-button">Edit</a>
+				| <a ng-click="deleteStatus(status)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+
+	<!-- <script src="static/js/gender.js"></script> -->
+	<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+	<!-- 	<link rel="stylesheet" type="text/css" href="staic/css/master.css" media="screen" /> -->
+</body>
+</html>
