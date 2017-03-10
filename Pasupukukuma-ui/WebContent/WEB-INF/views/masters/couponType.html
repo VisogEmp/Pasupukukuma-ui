@@ -1,81 +1,56 @@
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
 <script type="text/javascript">
-	var app = angular.module("PujaManagement", []);
+	var app = angular.module("CouponTypeManagement", []);
 
 	//Controller Part
 	app
 			.controller(
-					"PujaController",
+					"CouponTypeController",
 					function($scope, $http) {
 
 						$scope.countries = [];
-						$scope.pujaForm = {
+						$scope.couponTypeForm = {
 							//  id : -1,
 							name : "",
-							description : "",
-							price       :"",
-							duration     :"",
-							photo		  :"",
-							pujaCount     :"",
-							status		:""
+							description : ""
 						};
 
 						//Now load the data from server
-						_refreshPujaData();
+						_refreshCouponTypeData();
 
 						//HTTP POST/PUT methods for add/edit role 
 						// with the help of id, we are going to find out whether it is put or post operation
 
-						$scope.submitPuja = function() {
+						$scope.submitCouponType = function() {
 
 							var method = "";
 							var url = "";
 							// alert($scope.roleForm.id);
-							if ($scope.pujaForm.id == -1
-									|| $scope.pujaForm.id == undefined) {
+							if ($scope.couponTypeForm.id == -1
+									|| $scope.couponTypeForm.id == undefined) {
 								//Id is absent in form data, it is create new role operation
 
 								method = "POST";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/';
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/';
 								$http.post(url, {
-									"name" : $scope.pujaForm.name,
-									"description" : $scope.pujaForm.description,
-									"price":$scope.pujaForm.price,
-									"duration":$scope.pujaForm.duration,
-									"photo":$scope.pujaForm.photo,
-									"pujaCount":$scope.pujaForm.pujaCount,
-									"status":$scope.pujaForm.status
-												
+									"name" : $scope.couponTypeForm.name,
+									"description" : $scope.couponTypeForm.description
 								}).then(_success, _error);
 
 							} else {
 
 								//Id is present in form data, it is edit role operation
-								id = $scope.pujaForm.id;
+								id = $scope.couponTypeForm.id;
 								method = "PUT";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/'
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/'
 										+ id;
 								$http.put(url, {
-									"name" : $scope.pujaForm.name,
-									"description" : $scope.pujaForm.description,
-									"price":$scope.pujaForm.price,
-									"duration":$scope.pujaForm.duration,
-									"photo":$scope.pujaForm.photo,
-									"pujaCount":$scope.pujaForm.pujaCount,
-									"status":$scope.pujaForm.status
+									"name" : $scope.couponTypeForm.name,
+									"description" : $scope.couponTypeForm.description
 								}).then(_success, _error);
-								$scope.pujaForm.id = -1;
+								$scope.couponTypeForm.id = -1;
 							}
 							/*         
 							                   $http({
@@ -89,39 +64,33 @@
 						};
 
 						//HTTP DELETE- delete role by Id
-						$scope.deletePuja = function(puja) {
+						$scope.deleteCouponType = function(couponType) {
 							$http(
 									{
 										method : 'DELETE',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/'
-												+ puja.id
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/'
+												+ couponType.id
 									}).then(_success, _error);
 						};
 
 						// In case of edit, populate form fields and assign form.id with role id
-						$scope.editPuja = function(puja) {
+						$scope.editCouponType = function(couponType) {
 
-							$scope.pujaForm.name = puja.name;
-							$scope.pujaForm.description = puja.description;
-							$scope.pujaForm.price = puja.price;
-							$scope.pujaForm.duration = puja.duration;
-							$scope.pujaForm.photo = puja.photo;
-							$scope.pujaForm.pujaCount = puja.pujaCount;
-							$scope.pujaForm.status = puja.status;
-							$scope.pujaForm.id = puja.id;
-							
+							$scope.couponTypeForm.name = couponType.name;
+							$scope.couponTypeForm.description = couponType.description;
+							$scope.couponTypeForm.id = couponType.id;
 						};
 
 						/* Private Methods */
 						//HTTP GET- get all countries collection
-						function _refreshPujaData() {
+						function _refreshCouponTypeData() {
 							$http(
 									{
 										method : 'GET',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/'
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/'
 									}).then(function successCallback(response) {
 								//alert(response.data.data)
-								$scope.pujas = response.data.data;
+								$scope.couponTypes = response.data.data;
 							}, function errorCallback(response) {
 								console.log(response.statusText);
 							});
@@ -129,7 +98,7 @@
 
 						function _success(response) {
 
-							_refreshPujaData();
+							_refreshCouponTypeData();
 							_clearFormData()
 						}
 
@@ -141,13 +110,8 @@
 						//Clear the form
 						function _clearFormData() {
 							//  $scope.roleForm.id = -1;
-							$scope.pujaForm.name = "";
-							$scope.pujaForm.description = "";
-							$scope.pujaForm.price = "";
-							$scope.pujaForm.duration = "";
-							$scope.pujaForm.photo = "";
-							$scope.pujaForm.pujaCount = "";
-							$scope.pujaForm.status = "";
+							$scope.couponTypeForm.name = "";
+							$scope.couponTypeForm.description = "";
 
 						}
 						;
@@ -233,48 +197,28 @@ tfoot tr th:last-child {
 
 td, th {
 	border: 1px solid gray;
-	width: 10%;
+	width: 25%;
 	text-align: left;
 	padding: 5px 10px;
 }
 </style>
 </head>
-<body ng-app="PujaManagement" ng-controller="PujaController">
+<body ng-app="CouponTypeManagement" ng-controller="CouponTypeController">
 
-	<h1>Puja Master</h1>
-	<form ng-submit="submitPuja()">
+	<h1>CouponType Master</h1>
+	<form ng-submit="submitCouponType()">
 		<table>
 
 			<tr>
-				<th colspan="2">Add/Edit puja</th>
+				<th colspan="2">Add/Edit CouponType</th>
 			</tr>
 			<tr>
-				<td>Puja Name</td>
-				<td><input type="text" ng-model="pujaForm.name" /></td>
+				<td>CouponType Name</td>
+				<td><input type="text" ng-model="couponTypeForm.name" /></td>
 			</tr>
 			<tr>
 				<td>Description</td>
-				<td><input type="text" ng-model="pujaForm.description" /></td>
-			</tr>
-			<tr>
-				<td>Price</td>
-				<td><input type="text" ng-model="pujaForm.price" /></td>
-			</tr>
-			<tr>
-				<td>Duration</td>
-				<td><input type="text" ng-model="pujaForm.duration" /></td>
-			</tr>
-			<tr>
-				<td>Photo</td>
-				<td><input type="text" ng-model="pujaForm.photo" /></td>
-			</tr>
-			<tr>
-				<td>PujaCount</td>
-				<td><input type="text" ng-model="pujaForm.pujaCount" /></td>
-			</tr>
-			<tr>
-				<td>Status</td>
-				<td><input type="text" ng-model="pujaForm.status" /></td>
+				<td><input type="text" ng-model="couponTypeForm.description" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="Submit"
@@ -283,7 +227,7 @@ td, th {
 		</table>
 	</form>
 
-	<b>SearchBox:</b>
+	SearchBox:
 	<input type="text" ng-model="search" class="form-control search"
 		placeholder="searchText">
 
@@ -293,31 +237,26 @@ td, th {
 
 			<th>Name</th>
 			<th>Description</th>
-			<th>Price</th>
-			<th>Duration</th>
-			<th>Photo</th>
-			<th>PujaCount</th>
-			<th>Status</th>
 			<th></th>
 
 		</tr>
 
-		<tr ng-repeat="puja in pujas |filter:search"">
+		<tr ng-repeat="couponType in couponTypes |filter:search"">
 
-			<td>{{ puja.name }}</td>
-			<td>{{ puja.description }}</td>
-			<td>{{ puja.price}}</td>
-			<td>{{ puja.duration }}</td>
-			<td>{{ puja.photo }}</td>
-			<td>{{ puja.pujaCount}}</td>
-			<td>{{ puja.status }}</td>
+			<td>{{ couponType.name }}</td>
+			<td>{{ couponType.description }}</td>
 
-			<td><a ng-click="editPuja(puja)" class="blue-button">Edit</a> |
-				<a ng-click="deletePuja(puja)" class="red-button">Delete</a></td>
+			<td><a ng-click="editCouponType(couponType)" class="blue-button">Edit</a>
+				| <a ng-click="deleteCouponType(couponType)" class="red-button">Delete</a></td>
 		</tr>
 
 	</table>
-	
+
+
+
+
 
 </body>
+
+
 </html>

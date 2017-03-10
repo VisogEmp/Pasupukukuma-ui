@@ -61,10 +61,10 @@ public class PasupukukumaController {
 		return "masters/status";
 	}
 	
-	@RequestMapping(value ="/coupon_Type",method=RequestMethod.GET)
+	@RequestMapping(value ="/couponType",method=RequestMethod.GET)
 	public String getCouponType(){
 		
-		return "masters/coupon_Type";
+		return "masters/couponType";
 	}
 	
 	@RequestMapping(value ="/puja",method=RequestMethod.GET)
