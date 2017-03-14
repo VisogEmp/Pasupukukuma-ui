@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+
 <html>
 <head>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 <link rel="stylesheet"
@@ -8,69 +9,57 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
 <title>AngularJS $http Rest example</title>
-
 <script type="text/javascript">
-	var app = angular.module("RaasiManagement", []);
+	var app = angular.module("CouponTypeManagement", []);
 
 	//Controller Part
 	app
 			.controller(
-					"RaasiController",
+					"CouponTypeController",
 					function($scope, $http) {
 
 						//$scope.countries = [];
-						$scope.raasiForm = {
+						$scope.couponTypeForm = {
 							//  id : -1,
 							name : "",
 							description : ""
 						};
 
 						//Now load the data from server
-						_refreshRaasiData();
+						_refreshCouponTypeData();
 
-						//HTTP POST/PUT methods for add/edit raasi 
+						//HTTP POST/PUT methods for add/edit role 
 						// with the help of id, we are going to find out whether it is put or post operation
 
-						$scope.submitRaasi = function() {
+						$scope.submitCouponType = function() {
 
 							var method = "";
 							var url = "";
-							// alert($scope.raasiForm.id);
-							if ($scope.raasiForm.id == -1
-									|| $scope.raasiForm.id == undefined) {
-								//Id is absent in form data, it is create new raasi operation
+							// alert($scope.roleForm.id);
+							if ($scope.couponTypeForm.id == -1
+									|| $scope.couponTypeForm.id == undefined) {
+								//Id is absent in form data, it is create new role operation
 
 								method = "POST";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/raasi/';
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/';
 								$http.post(url, {
-									"name" : $scope.raasiForm.name,
-									"description" : $scope.raasiForm.description
+									"name" : $scope.couponTypeForm.name,
+									"description" : $scope.couponTypeForm.description
 								}).then(_success, _error);
 
 							} else {
 
-								//Id is present in form data, it is edit raasi operation
-								id = $scope.raasiForm.id;
+								//Id is present in form data, it is edit role operation
+								id = $scope.couponTypeForm.id;
 								method = "PUT";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/raasi/'
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/'
 										+ id;
 								$http.put(url, {
-									"name" : $scope.raasiForm.name,
-									"description" : $scope.raasiForm.description
+									"name" : $scope.couponTypeForm.name,
+									"description" : $scope.couponTypeForm.description
 								}).then(_success, _error);
-								$scope.raasiForm.id = -1;
+								$scope.couponTypeForm.id = -1;
 							}
 							/*         
 							                   $http({
@@ -83,34 +72,34 @@
 							                   }).then( _success, _error ); */
 						};
 
-						//HTTP DELETE- delete raasi by Id
-						$scope.deleteRaasi = function(raasi) {
+						//HTTP DELETE- delete role by Id
+						$scope.deleteCouponType = function(couponType) {
 							$http(
 									{
 										method : 'DELETE',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/raasi/'
-												+ raasi.id
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/'
+												+ couponType.id
 									}).then(_success, _error);
 						};
 
-						// In case of edit, populate form fields and assign form.id with raasi id
-						$scope.editRaasi = function(raasi) {
+						// In case of edit, populate form fields and assign form.id with role id
+						$scope.editCouponType = function(couponType) {
 
-							$scope.raasiForm.name = raasi.name;
-							$scope.raasiForm.description = raasi.description;
-							$scope.raasiForm.id = raasi.id;
+							$scope.couponTypeForm.name = couponType.name;
+							$scope.couponTypeForm.description = couponType.description;
+							$scope.couponTypeForm.id = couponType.id;
 						};
 
 						/* Private Methods */
 						//HTTP GET- get all countries collection
-						function _refreshRaasiData() {
+						function _refreshCouponTypeData() {
 							$http(
 									{
 										method : 'GET',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/raasi/'
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/coupon_type/'
 									}).then(function successCallback(response) {
 								//alert(response.data.data)
-								$scope.raasi = response.data.data;
+								$scope.couponTypes = response.data.data;
 							}, function errorCallback(response) {
 								console.log(response.statusText);
 							});
@@ -118,7 +107,7 @@
 
 						function _success(response) {
 
-							_refreshRaasiData();
+							_refreshCouponTypeData();
 							_clearFormData()
 						}
 
@@ -129,16 +118,34 @@
 
 						//Clear the form
 						function _clearFormData() {
-							//  $scope.raasiForm.id = -1;
-							$scope.raasiForm.name = "";
-							$scope.raasiForm.description = "";
+							//  $scope.roleForm.id = -1;
+							$scope.couponTypeForm.name = "";
+							$scope.couponTypeForm.description = "";
 
 						}
 						;
 					});
 </script>
-
 <style>
+.search{
+	width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.txtColor
+{
+	color: #FFFFFF;
+	border: 1px solid #ccc;
+	background-color:blue;
+	padding:4px;
+	border-radius: 4px;
+	
+	
+}
 .blue-button {
 	background: #25A6E1;
 	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
@@ -213,22 +220,22 @@ td, th {
 	padding: 5px 10px;
 }
 </style>
-</head>
-<body ng-app="RaasiManagement" ng-controller="RaasiController">
-	<h1>Raasi Master</h1>
-	<form ng-submit="submitRaasi()">
+<head>
+<body ng-app="CouponTypeManagement" ng-controller="CouponTypeController">
+	<h1>CouponType Master</h1>
+	<form ng-submit="submitCouponType()">
 		<table>
 
 			<tr>
-				<th colspan="2">Add/Edit raasi</th>
+				<th colspan="2">Add/Edit CouponType</th>
 			</tr>
 			<tr>
-				<td>Raasi Name</td>
-				<td><input type="text" ng-model="raasiForm.name" /></td>
+				<td>CouponTypes Name</td>
+				<td><input type="text" ng-model="couponTypeForm.name" /></td>
 			</tr>
 			<tr>
 				<td>Description</td>
-				<td><input type="text" ng-model="raasiForm.description" /></td>
+				<td><input type="text" ng-model="couponTypeForm.description" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="Submit"
@@ -236,25 +243,33 @@ td, th {
 			</tr>
 		</table>
 	</form>
-	<table class ="table table-bordered">
+	
+	 <label class="txtColor"><b>SearchBox:</b></label> <input type="text" ng-model="search" class="form-control search" placeholder="searchText">
+	 
+	 
+	<table class="table table-striped table-bordered">
 		<tr>
 
-			<th>Raasi</th>
+			<th>CouponType</th>
 			<th>Description</th>
 			<th></th>
 
 		</tr>
 
-		<tr ng-repeat="raasis in raasi">
+		<tr ng-repeat="couponType in couponTypes |filter:search"">
 
-			<td>{{ raasis.name }}</td>
-			<td>{{ raasis.description }}</td>
+			<td>{{ couponType.name }}</td>
+			<td>{{ couponType.description }}</td>
 
-			<td><a ng-click="editRaasi(raasis)" class="blue-button">Edit</a> |
-				<a ng-click="deleteRaasi(raasis)" class="red-button">Delete</a></td>
+			<td><a ng-click="editCouponType(couponType)" class="blue-button">Edit</a> |
+				<a ng-click="deleteCouponType(couponType)" class="red-button">Delete</a></td>
 		</tr>
 
 	</table>
+	
+
+
+
 
 
 
