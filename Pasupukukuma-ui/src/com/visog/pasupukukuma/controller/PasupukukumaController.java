@@ -18,6 +18,11 @@ public class PasupukukumaController {
 		
 		return "masters/home";
 	}
+	@RequestMapping(value ="/couponType",method=RequestMethod.GET)
+	public String getCouponType(){
+		
+		return "masters/couponType";
+	}
 
 
 	
