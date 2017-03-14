@@ -18,6 +18,7 @@ public class PasupukukumaController {
 		
 		return "masters/home";
 	}
+	
 
 	@RequestMapping(value ="/gender",method=RequestMethod.GET)
 	public String getGender(){
