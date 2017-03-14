@@ -12,7 +12,7 @@
  <h2>Pasupukukuma-ui</h2>
  <h4><a href="/Pasupukukuma-ui/roles">Roles</a></h4>
  <h4><a href="/Pasupukukuma-ui/home">Home</a></h4>
-<<<<<<< HEAD
+
  <h4><a href="/Pasupukukuma-ui/gender">Gender</a></h4>
  <h4><a href="/Pasupukukuma-ui/state">State</a></h4>
   <h4><a href="/Pasupukukuma-ui/country">Country</a></h4>
@@ -20,11 +20,9 @@
    <h4><a href="/Pasupukukuma-ui/raasi">Raasi</a></h4>
    <h4><a href="/Pasupukukuma-ui/nakshatram">Nakshatram</a></h4>
    <h4><a href="/Pasupukukuma-ui/status">Status</a></h4>
-  <h4><a href="/Pasupukukuma-ui/couponType">CouponType</a></h4>
    <h4><a href="/Pasupukukuma-ui/puja">Puja</a></h4>
     <h4><a href="/Pasupukukuma-ui/pujaSamagri">PujaSamagri</a></h4>
 
- <h4><a href="/Pasupukukuma-ui/couponType">CouponType</a></h4>
  
 
  </center>
