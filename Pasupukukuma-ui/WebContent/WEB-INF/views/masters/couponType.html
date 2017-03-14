@@ -2,6 +2,14 @@
 <html>
 <head>
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<title>AngularJS $http Rest example</title>
 <script type="text/javascript">
 	var app = angular.module("CouponTypeManagement", []);
 
@@ -11,7 +19,7 @@
 					"CouponTypeController",
 					function($scope, $http) {
 
-						$scope.countries = [];
+						//$scope.countries = [];
 						$scope.couponTypeForm = {
 							//  id : -1,
 							name : "",
@@ -119,16 +127,25 @@
 					});
 </script>
 <style>
-.search {
+.search{
 	width: 20%;
-	padding: 12px 20px;
-	margin: 8px 0;
-	display: inline-block;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
-
+.txtColor
+{
+	color: #FFFFFF;
+	border: 1px solid #ccc;
+	background-color:blue;
+	padding:4px;
+	border-radius: 4px;
+	
+	
+}
 .blue-button {
 	background: #25A6E1;
 	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
@@ -203,9 +220,8 @@ td, th {
 	padding: 5px 10px;
 }
 </style>
-</head>
+<head>
 <body ng-app="CouponTypeManagement" ng-controller="CouponTypeController">
-
 	<h1>CouponType Master</h1>
 	<form ng-submit="submitCouponType()">
 		<table>
@@ -214,7 +230,7 @@ td, th {
 				<th colspan="2">Add/Edit CouponType</th>
 			</tr>
 			<tr>
-				<td>CouponType Name</td>
+				<td>CouponTypes Name</td>
 				<td><input type="text" ng-model="couponTypeForm.name" /></td>
 			</tr>
 			<tr>
@@ -227,16 +243,14 @@ td, th {
 			</tr>
 		</table>
 	</form>
-
-	SearchBox:
-	<input type="text" ng-model="search" class="form-control search"
-		placeholder="searchText">
-
-
+	
+	 <label class="txtColor">SearchBox:</label> <input type="text" ng-model="search" class="form-control search" placeholder="searchText">
+	 
+	 
 	<table class="table table-striped table-bordered">
 		<tr>
 
-			<th>Name</th>
+			<th>CouponType</th>
 			<th>Description</th>
 			<th></th>
 
@@ -247,18 +261,17 @@ td, th {
 			<td>{{ couponType.name }}</td>
 			<td>{{ couponType.description }}</td>
 
-			<td><a ng-click="editCouponType(couponType)" class="blue-button">Edit</a>
-				| <a ng-click="deleteCouponType(couponType)" class="red-button">Delete</a></td>
+			<td><a ng-click="editCouponType(couponType)" class="blue-button">Edit</a> |
+				<a ng-click="deleteCouponType(couponType)" class="red-button">Delete</a></td>
 		</tr>
 
 	</table>
+	
+
 
 
 
 
 
 </body>
-
-
-
-
+</html>
