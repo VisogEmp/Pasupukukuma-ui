@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<script type="text/javascript">
+	var app = angular.module("PujaManagement", []);
+
+	//Controller Part
+	app
+			.controller(
+					"PujaController",
+					function($scope, $http) {
+
+						$scope.countries = [];
+						$scope.pujaForm = {
+							//  id : -1,
+							name : "",
+							description : "",
+							price       :"",
+							duration     :"",
+							photo		  :"",
+							pujaCount     :"",
+							status		:""
+						};
+
+						//Now load the data from server
+						_refreshPujaData();
+
+						//HTTP POST/PUT methods for add/edit role 
+						// with the help of id, we are going to find out whether it is put or post operation
+
+						$scope.submitPuja = function() {
+
+							var method = "";
+							var url = "";
+							// alert($scope.roleForm.id);
+							if ($scope.pujaForm.id == -1
+									|| $scope.pujaForm.id == undefined) {
+								//Id is absent in form data, it is create new role operation
+
+								method = "POST";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/';
+								$http.post(url, {
+									"name" : $scope.pujaForm.name,
+									"description" : $scope.pujaForm.description,
+									"price":$scope.pujaForm.price,
+									"duration":$scope.pujaForm.duration,
+									"photo":$scope.pujaForm.photo,
+									"pujaCount":$scope.pujaForm.pujaCount,
+									"status":$scope.pujaForm.status
+												
+								}).then(_success, _error);
+
+							} else {
+
+								//Id is present in form data, it is edit role operation
+								id = $scope.pujaForm.id;
+								method = "PUT";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/'
+										+ id;
+								$http.put(url, {
+									"name" : $scope.pujaForm.name,
+									"description" : $scope.pujaForm.description,
+									"price":$scope.pujaForm.price,
+									"duration":$scope.pujaForm.duration,
+									"photo":$scope.pujaForm.photo,
+									"pujaCount":$scope.pujaForm.pujaCount,
+									"status":$scope.pujaForm.status
+								}).then(_success, _error);
+								$scope.pujaForm.id = -1;
+							}
+							/*         
+							                   $http({
+							                       method : method,
+							                       url : url,
+							                       data : angular.toJson($scope.roleForm),
+							                       headers : {
+							                           'Content-Type' : 'application/json'
+							                       }
+							                   }).then( _success, _error ); */
+						};
+
+						//HTTP DELETE- delete role by Id
+						$scope.deletePuja = function(puja) {
+							$http(
+									{
+										method : 'DELETE',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/'
+												+ puja.id
+									}).then(_success, _error);
+						};
+
+						// In case of edit, populate form fields and assign form.id with role id
+						$scope.editPuja = function(puja) {
+
+							$scope.pujaForm.name = puja.name;
+							$scope.pujaForm.description = puja.description;
+							$scope.pujaForm.price = puja.price;
+							$scope.pujaForm.duration = puja.duration;
+							$scope.pujaForm.photo = puja.photo;
+							$scope.pujaForm.pujaCount = puja.pujaCount;
+							$scope.pujaForm.status = puja.status;
+							$scope.pujaForm.id = puja.id;
+							
+						};
+
+						/* Private Methods */
+						//HTTP GET- get all countries collection
+						function _refreshPujaData() {
+							$http(
+									{
+										method : 'GET',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja/'
+									}).then(function successCallback(response) {
+								//alert(response.data.data)
+								$scope.pujas = response.data.data;
+							}, function errorCallback(response) {
+								console.log(response.statusText);
+							});
+						}
+
+						function _success(response) {
+
+							_refreshPujaData();
+							_clearFormData()
+						}
+
+						function _error(response) {
+
+							console.log(response.statusText);
+						}
+
+						//Clear the form
+						function _clearFormData() {
+							//  $scope.roleForm.id = -1;
+							$scope.pujaForm.name = "";
+							$scope.pujaForm.description = "";
+							$scope.pujaForm.price = "";
+							$scope.pujaForm.duration = "";
+							$scope.pujaForm.photo = "";
+							$scope.pujaForm.pujaCount = "";
+							$scope.pujaForm.status = "";
+
+						}
+						;
+					});
+</script>
+<style>
+.search {
+	width: 20%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 10%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+</head>
+<body ng-app="PujaManagement" ng-controller="PujaController">
+
+	<h1>Puja Master</h1>
+	<form ng-submit="submitPuja()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add/Edit puja</th>
+			</tr>
+			<tr>
+				<td>Puja Name</td>
+				<td><input type="text" ng-model="pujaForm.name" /></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><input type="text" ng-model="pujaForm.description" /></td>
+			</tr>
+			<tr>
+				<td>Price</td>
+				<td><input type="text" ng-model="pujaForm.price" /></td>
+			</tr>
+			<tr>
+				<td>Duration</td>
+				<td><input type="text" ng-model="pujaForm.duration" /></td>
+			</tr>
+			<tr>
+				<td>Photo</td>
+				<td><input type="text" ng-model="pujaForm.photo" /></td>
+			</tr>
+			<tr>
+				<td>PujaCount</td>
+				<td><input type="text" ng-model="pujaForm.pujaCount" /></td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td><input type="text" ng-model="pujaForm.status" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+
+	<b>SearchBox:</b>
+	<input type="text" ng-model="search" class="form-control search"
+		placeholder="searchText">
+
+
+	<table class="table table-striped table-bordered">
+		<tr>
+
+			<th>Name</th>
+			<th>Description</th>
+			<th>Price</th>
+			<th>Duration</th>
+			<th>Photo</th>
+			<th>PujaCount</th>
+			<th>Status</th>
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="puja in pujas |filter:search"">
+
+			<td>{{ puja.name }}</td>
+			<td>{{ puja.description }}</td>
+			<td>{{ puja.price}}</td>
+			<td>{{ puja.duration }}</td>
+			<td>{{ puja.photo }}</td>
+			<td>{{ puja.pujaCount}}</td>
+			<td>{{ puja.status }}</td>
+
+			<td><a ng-click="editPuja(puja)" class="blue-button">Edit</a> |
+				<a ng-click="deletePuja(puja)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+	
+
+</body>
+</html>

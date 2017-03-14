@@ -1,0 +1,140 @@
+
+<html>
+<head>
+<!-- <link rel="stylesheet" type="text/css" href="/visog-job-portal-ui/resources/css/master.css" media="screen" /> -->
+ <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/Pasupukukuma-ui/resources/js/gender.js"></script>
+<!-- Mubarak djshfj-->
+<style>
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+
+
+<title>AngularJS $http Rest example</title>
+<head>
+<body ng-app="GenderManagement" ng-controller="GenderController">
+	<h1>Gender Master</h1>
+	<form ng-submit="submitGender()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add/Edit Gender</th>
+			</tr>
+			<tr>
+				<td>Gender Name</td>
+				<td><input type="text" ng-model="genderForm.name" /></td>
+			</tr>
+
+			<tr>
+				<td>Code</td>
+				<td><input type="text" ng-model="genderForm.code" /></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><input type="text" ng-model="genderForm.description" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+	<table>
+		<tr>
+
+			<th>Name</th>
+			<th>Code</th>
+			<th>Description</th>
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="gender in genders">
+
+			<td>{{ gender.name }}</td>
+			<td>{{ gender.code }}</td>
+			<td>{{ gender.description }}</td>
+
+			<td><a ng-click="editGender(gender)" class="blue-button">Edit</a>
+				| <a ng-click="deleteGender(gender)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+
+	<!-- <script src="static/js/gender.js"></script> -->
+	<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+	<!-- 	<link rel="stylesheet" type="text/css" href="staic/css/master.css" media="screen" /> -->
+</body>
+</html>
