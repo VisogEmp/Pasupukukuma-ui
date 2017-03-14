@@ -74,4 +74,9 @@ public class PasupukukumaController {
 		return "masters/puja_Samagri";
 	}
 	
+	@RequestMapping(value ="/couponType",method=RequestMethod.GET)
+	public String getCouponType(){
+		
+		return "masters/couponType";
+	}
 }
