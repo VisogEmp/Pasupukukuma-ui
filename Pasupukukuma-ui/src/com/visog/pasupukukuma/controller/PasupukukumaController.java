@@ -72,5 +72,10 @@ public class PasupukukumaController {
 		
 		return "masters/puja";
 	}
+	@RequestMapping(value ="/pujaSamagri",method=RequestMethod.GET)
+	public String getPujaSamagri(){
+		
+		return "masters/puja_Samagri";
+	}
 	
 }

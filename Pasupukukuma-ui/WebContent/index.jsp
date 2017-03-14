@@ -21,6 +21,7 @@
    <h4><a href="/Pasupukukuma-ui/status">Status</a></h4>
   <h4><a href="/Pasupukukuma-ui/couponType">CouponType</a></h4>
    <h4><a href="/Pasupukukuma-ui/puja">Puja</a></h4>
+    <h4><a href="/Pasupukukuma-ui/pujaSamagri">PujaSamagri</a></h4>
  </center>
 
 </body>
