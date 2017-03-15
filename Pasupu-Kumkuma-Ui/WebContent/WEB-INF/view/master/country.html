@@ -1,0 +1,260 @@
+
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css"
+	href="/Pasupu-Kumkuma-Ui/resources/css/master.css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="resources/css/user.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<script src="resources/js/jquery-3.1.1.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+
+<script src="/Pasupu-Kumkuma-Ui/resources/js/jquery-3.1.1.min.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(e) {
+		$('.masters').click(function() {
+			$(this).toggleClass('tap');
+
+		});
+
+		$('.transactions').click(function() {
+			$(this).toggleClass('tap');
+
+		});
+	});
+</script>
+<!-- <meta name="viewport" content="width=device-width, initial-scale:1, user-scalable=0"/> -->
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<!-- <script src="/visog-job-portal-ui/resources/js/country.js"></script> -->
+<title>AngularJS $http Rest example</title>
+<script type="text/javascript">
+	
+</script>
+<script>
+	var app = angular.module("CountryManagement", []);
+
+	//Controller Part
+	app
+			.controller(
+					"CountryController",
+					function($scope, $http) {
+
+						$scope.countries = [];
+						$scope.countryForm = {
+							// id : -1,
+							name : "",
+							code : "",
+						//orderNum : ""
+						};
+
+						// Now load the data from server
+						_refreshCountryData();
+
+						// HTTP POST/PUT methods for add/edit role
+						// with the help of id, we are going to find out whether it
+						// is put or post operation
+
+						$scope.submitCountry = function() {
+
+							var method = "";
+							var url = "";
+							// alert($scope.genderForm.id);
+							if ($scope.countryForm.id == -1
+									|| $scope.countryForm.id == undefined) {
+								// Id is absent in form data, it is create new role
+								// operation
+
+								method = "POST";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/country/';
+								$http.post(url, {
+									"name" : $scope.countryForm.name,
+									"code" : $scope.countryForm.code,
+								//"orderNum" : $scope.countryForm.orderNum
+								}).then(_success, _error);
+
+							} else {
+
+								// Id is present in form data, it is edit role
+								// operation
+								id = $scope.countryForm.id;
+								method = "PUT";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/country/'
+										+ id;
+								$http.put(url, {
+									"name" : $scope.countryForm.name,
+									"code" : $scope.countryForm.code,
+								//"orderNum" : $scope.countryForm.orderNum
+								}).then(_success, _error);
+								$scope.countryForm.id = -1;
+							}
+							/*
+							 * $http({ method : method, url : url, data :
+							 * angular.toJson($scope.genderForm), headers : {
+							 * 'Content-Type' : 'application/json' } }).then(
+							 * _success, _error );
+							 */
+						};
+
+						// HTTP DELETE- delete role by Id
+						$scope.deleteCountry = function(country) {
+							$http(
+									{
+										method : 'DELETE',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/country/'
+												+ country.id
+									}).then(_success, _error);
+						};
+
+						// In case of edit, populate form fields and assign form.id
+						// with role id
+						$scope.editCountry = function(country) {
+
+							$scope.countryForm.name = country.name;
+							$scope.countryForm.code = country.code;
+							//$scope.countryForm.orderNum = country.orderNum;
+							$scope.countryForm.id = country.id;
+						};
+
+						/* Private Methods */
+						// HTTP GET- get all countries collection
+						function _refreshCountryData() {
+							$http(
+									{
+										method : 'GET',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/country/'
+									}).then(function successCallback(response) {
+								// alert(response.data.data)
+								$scope.countrys = response.data.data;
+							}, function errorCallback(response) {
+								console.log(response.statusText);
+							});
+						}
+
+						function _success(response) {
+
+							_refreshCountryData();
+							_clearFormData()
+						}
+
+						function _error(response) {
+
+							console.log(response.statusText);
+						}
+
+						// Clear the form
+						function _clearFormData() {
+							// $scope.genderForm.id = -1;
+							$scope.countryForm.name = "";
+							$scope.countryForm.code = "";
+							//	$scope.countryForm.orderNum = "";
+
+						}
+						;
+					});
+</script>
+<head>
+<body>
+	<div id="header">
+		<div class="logo">
+			<a href="#">Pasupu<span>Kumkuma</span></a>
+		</div>
+
+	</div>
+	<a class="mobile" href="#">Menu</a>
+	<div id="container">
+		<div class="sidebar">
+			<ul id="nav">
+
+				<li class="masters"><a href="#">Masters<span class="sub"></span></a>
+					<ul>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/roles">Roles</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/gender">Gender</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/country">Country</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/state">State</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/city">City</a></li>
+
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/status">Status</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/raasi">Raasi</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/nakshatram">Nakshatram</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/puja">Puja</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaSamagri">PujaSamagri</a></li>
+
+
+					</ul></li>
+
+				<li class="transactions"><a href="#">Transactions<span
+						class="sub"></span></a>
+					<ul>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/users">Users</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/address">Address</a></li>
+
+					</ul></li>
+				<li><a href="/Pasupu-Kumkuma-Ui/reg">UsersRegistration</a></li>
+				<li><a href="#">Login</a></li>
+
+
+			</ul>
+
+
+		</div>
+
+		<div class="content" ng-app="CountryManagement"
+			ng-controller="CountryController">
+			<h1>Country Master</h1>
+			<form ng-submit="submitCountry()">
+				<table>
+
+					<tr>
+						<th colspan="2">Add/Edit Country</th>
+					</tr>
+
+					<tr>
+						<td>name</td>
+						<td><input type="text" ng-model="countryForm.name" /></td>
+					</tr>
+					<tr>
+						<td>code</td>
+						<td><input type="text" ng-model="countryForm.code" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Submit"
+							class="blue-button" /></td>
+					</tr>
+				</table>
+			</form>
+			<table>
+				<tr>
+
+					<th>name</th>
+					<th>code</th>
+					<th></th>
+
+				</tr>
+
+				<tr ng-repeat="country in countrys">
+
+					<td>{{ country.name }}</td>
+					<td>{{ country.code }}</td>
+
+
+					<td><a ng-click="editCountry(country)" class="blue-button">Edit</a>
+						| <a ng-click="deleteCountry(country)"
+						onclick="deleteCountry(country)" class="red-button">Delete</a></td>
+				</tr>
+
+			</table>
+
+		</div>
+	</div>
+
+
+
+</body>
+</html>

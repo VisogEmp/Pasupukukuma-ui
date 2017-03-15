@@ -1,0 +1,131 @@
+
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/Pasupu-Kumkuma-Ui/resources/css/master.css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="resources/css/user.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<script src="resources/js/jquery-3.1.1.min.js"></script>
+ <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/Pasupu-Kumkuma-Ui/resources/js/city.js"></script>
+
+<script src="/Pasupu-Kumkuma-Ui/resources/js/jquery-3.1.1.min.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+$(document).ready(function(e){
+	$('.masters').click(function(){
+		$(this).toggleClass('tap');
+		
+	});
+	
+	$('.transactions').click(function(){
+		$(this).toggleClass('tap');
+		
+	});
+});
+</script>
+<meta name="viewport" content="width=device-width, initial-scale:1, user-scalable=0"/>
+</head>
+<body>
+
+	<div id="header">
+		<div class="logo">
+			<a href="#">Pasupu<span>Kumkuma</span></a>
+		</div>
+
+	</div>
+	
+	<div id="container">
+		<div class="sidebar">
+			<ul id="nav">
+
+				<li class="masters"><a href="#">Masters<span class="sub"></span></a>
+				<ul>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/roles">Roles</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/gender">Gender</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/country">Country</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/state">State</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/city">City</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/status">Status</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/raasi">Raasi</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/nakshatram">Nakshatram</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/puja">Puja</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaSamagri">PujaSamagri</a></li>
+				
+				
+				</ul>
+				</li>
+				
+				<li class="transactions"><a href="#">Transactions<span class="sub"></span></a>
+				<ul>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/users">Users</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/address">Address</a></li>
+				
+				</ul>
+				</li>
+				<li><a href="/Pasupu-Kumkuma-Ui/reg">Registration</a></li>
+				<li><a href="/Pasupu-Kumkuma-Ui/user">Login</a></li>
+			</ul>
+		</div>
+		<div class="content"
+		 ng-app="CityManagement" ng-controller="CityController">
+	<h1>CITY</h1>
+	<form ng-submit="submitCity()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add City</th>
+			</tr>
+			<tr>
+				<td>name</td>
+				<td><input type="text" ng-model="cityForm.name" /></td>
+			</tr>
+			
+			<tr>
+				<td>country</td>
+				<td><input type="text" ng-model="cityForm.country" /></td>
+			</tr>
+			<tr>
+				<td>state</td>
+				<td><input type="text" ng-model="cityForm.state" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+	<table>
+		<tr>
+
+			<th>name</th>
+			<th>country</th>
+			<th>state</th>
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="city in cities">
+
+			<td>{{ city.name }}</td>
+			<td>{{ city.country }}</td>
+			<td>{{ city.state }}</td>
+
+			<td><a ng-click="editCity(city)" class="blue-button"><span>Edit</span></a> | <a ng-click="deleteCity(city)" onclick="deleteCity(city)" class="red-button"><span>Delete</span></a></td>
+		</tr>
+
+	</table>
+		
+		</div>
+
+	</div>
+
+</body>
+</html>

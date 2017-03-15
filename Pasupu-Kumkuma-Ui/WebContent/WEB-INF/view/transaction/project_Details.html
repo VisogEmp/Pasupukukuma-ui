@@ -1,0 +1,433 @@
+	
+<html>
+<head>
+
+ <link rel="stylesheet" type="text/css" href="/Spring4HelloWorld/resources/css/master.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/user.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<script src="resources/js/jquery-3.1.1.min.js"></script>
+ <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(e){
+	$('.masters').click(function(){
+		$(this).toggleClass('tap');
+		
+	});
+	$('.transactions').click(function(){
+		$(this).toggleClass('tap');
+		
+	});
+	
+});
+</script>
+<meta name="viewport" content="width=device-width, initial-scale:1, user-scalable=0"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/visog-job-portal-ui/resources/js/projectDetails.js"></script>
+<!-- <script>bbmb
+	var app = angular.module("ProjectDetailsManagement", []);
+<commit2>
+	//Controller Part
+	app
+			.controller(
+					"ProjectDetailsController",
+					function($scope, $http) {
+
+						$scope.projectdetails = [];
+						$scope.projectdetailsForm = {
+							// id : -1,
+							user : "",
+							jobResponsibilities : "",
+							projectDetails : "",
+							projectTitle:"",
+							employmentType:"",
+							clientName:"",
+							durationFrom : "",
+							durationTo : "",
+							teamSize : "",
+							technologiesUsed : ""
+						};
+
+						// Now load the data from server
+						_refreshProjectDetailsData();
+
+						// HTTP POST/PUT methods for add/edit projectDetails
+						// with the help of id, we are going to find out whether it
+						// is put or post operation
+
+						$scope.submiProjectDetails = function() {
+
+							var method = "";
+							var url = "";
+							// alert($scope.genderForm.id);
+							if ($scope.countryForm.id == -1
+									|| $scope.projectdetailsForm.id == undefined) {
+								// Id is absent in form data, it is create new projectDetails
+								// operation
+
+								method = "POST";
+								url = 'http://localhost:8080/visog-job-portal-api/transaction/projectDetails/';
+								$http
+										.post(
+												url,
+												{
+													"user" : $scope.projectdetailsForm.user,
+													"jobResponsibilities" : $scope.projectdetailsForm.jobResponsibilities,
+													"projectDetails" : $scope.projectdetailsForm.projectDetails,
+													"projectTitle":$scope.projectdetailsForm.projectTitle,
+													"employmentType":$scope.projectdetailsForm.employmentType,
+													"clientName":$scope.projectdetailsForm.clientName,
+													"durationFrom" : $scope.projectdetailsForm.durationFrom,
+													"durationTo" : $scope.projectdetailsForm.durationTo,
+													"teamSize" : $scope.projectdetailsForm.teamSize,
+													"technologiesUsed" : $scope.projectdetailsForm.technologiesUsed
+												}).then(_success, _error);
+
+							} else {
+
+								// Id is present in form data, it is edit projectDetails
+								// operation
+								id = $scope.projectdetailsForm.id;
+								method = "PUT";
+								url = 'http://localhost:8080/visog-job-portal-api/transaction/projectDetails/'
+										+ id;
+								$http
+										.put(
+												url,
+												{
+													"user" : $scope.projectdetailsForm.user,
+													"jobResponsibilities" : $scope.projectdetailsForm.jobResponsibilities,
+													"projectDetails" : $scope.projectdetailsForm.projectDetails,
+													"projectTitle":$scope.projectdetailsForm.projectTitle,
+													"employmentType":$scope.projectdetailsForm.employmentType,
+													"clientName":$scope.projectdetailsForm.clientName,
+													"durationFrom" : $scope.projectdetailsForm.durationFrom,
+													"durationTo" : $scope.projectdetailsForm.durationTo,
+													"teamSize" : $scope.projectdetailsForm.teamSize,
+													"technologiesUsed" : $scope.projectdetailsForm.technologiesUsed
+												}).then(_success, _error);
+								$scope.projectdetailsForm.id = -1;
+							}
+							/*
+							 * $http({ method : method, url : url, data :
+							 * angular.toJson($scope.genderForm), headers : {
+							 * 'Content-Type' : 'application/json' } }).then(
+							 * _success, _error );
+							 */
+						};
+
+						// HTTP DELETE- delete projectDetails by Id
+						$scope.deleteProjectDetails = function(projectdetails) {
+							$http(
+									{
+										method : 'DELETE',
+										url : 'http://localhost:8080/visog-job-portal-api/transaction/projectDetails/'
+												+ projectDetails.id
+									}).then(_success, _error);
+						};
+
+						// In case of edit, populate form fields and assign form.id
+						// with projectDetails id
+						$scope.editProjectDetails = function(projectdetails) {
+
+							$scope.projectdetailsForm.user = projectdetails.user;
+							$scope.projectdetailsForm.jobResponsibilities = projectdetails.jobResponsibilities;
+							$scope.projectdetailsForm.projectDetails = projectdetails.projectDetails;
+							$scope.projectdetailsForm.projectTitle = projectdetails.projectTitle;
+							$scope.projectdetailsForm.employmentType = projectdetails.employmentType;
+							$scope.projectdetailsForm.clientName = projectdetails.clientName;
+							$scope.projectdetailsForm.durationFrom = projectdetails.durationFrom;
+							$scope.projectdetailsForm.durationTo = projectdetails.durationTo;
+							$scope.projectdetailsForm.teamSize = projectdetails.teamSize;
+							$scope.projectdetailsForm.technologiesUsed = projectdetails.technologiesUsed;
+							$scope.projectdetailsForm.id =projectdetails.id;
+						};
+
+						/* Private Methods */
+						// HTTP GET- get all countries collection
+						function _refreshProjectDetailsData() {
+							$http(
+									{
+										method : 'GET',
+										url : 'http://localhost:8080/visog-job-portal-api/transaction/projectDetails/'
+									}).then(function successCallback(response) {
+								// alert(response.data.data)
+								$scope.countrys = response.data.data;
+							}, function errorCallback(response) {
+								console.log(response.statusText);
+							});
+						}
+
+						function _success(response) {
+
+							_refreshProjectDetailsData();
+							_clearFormData()
+						}
+
+						function _error(response) {
+
+							console.log(response.statusText);
+						}
+
+						// Clear the form
+						function _clearFormData() {
+							// $scope.genderForm.id = -1;
+							$scope.projectdetailsForm.user = "";
+							$scope.projectdetailsForm.jobResponsibilities = "";
+							$scope.projectdetailsForm.projectDetails = "";
+							$scope.projectdetailsForm.projectTitle = "";
+							$scope.projectdetailsForm.employmentType = "";
+							$scope.projectdetailsForm.clientName = "";
+							$scope.projectdetailsForm.durationFrom = "";
+							$scope.projectdetailsForm.durationTo = "";
+							$scope.projectdetailsForm.teamSize = "";
+							$scope.projectdetailsForm.technologiesUsed = "";
+
+						}
+						;
+					});
+</script>  -->
+<style>
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+
+
+<title>AngularJS $http Rest example</title>
+<head>
+<body>
+<div id="header">
+		<div class="logo">
+			<a href="#">Job<span>Portal</span></a>
+		</div>
+
+	</div>
+	
+	<div id="container">
+		<div class="sidebar">
+			<ul id="nav">
+
+				<li class="masters"><a href="#">Masters<span class="sub"></span></a>
+				<ul>
+				<li class="child"><a href="/visog-job-portal-ui/roles">Roles</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/gender">Gender</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/country">Country</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/state">State</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/city">City</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/addressType">Address Type</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/courses">Courses</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/specialization">Specialization</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/university">University</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/educationType">Education Type</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/languages">Languages </a></li>
+				<li class="child"><a href="/visog-job-portal-ui/currency">Currency</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/industry">Industry</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/domains">Domains</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/jobRole">Job Role</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/status">Status</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/employmentType">Employment Type</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/employerType">Employer Type</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/fileType">File Type</a></li>
+				
+				</ul>
+				</li>
+				
+				<li class="transactions"><a href="#">Transactions<span class="sub"></span></a>
+				<ul>
+				<li class="child"><a href="/visog-job-portal-ui/users">Users</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/address">Address</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/employer">Employer</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/postJob">Post Job</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/postJodDomains">Post Job Domains</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/files">Files</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/employerJobseeker">Employer Job Seeker</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/postJobseeker">PostJob Seeker</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/jobSeeker">Job Seeker</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/educationDetails">Education Details</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/languageKnown">Language Known</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/projectDetails">Project Details</a></li>
+				<li class="child"><a href="/visog-job-portal-ui/experienceDetails">Experience Details</a></li>
+				
+				</ul>
+				</li>
+				<li><a href="/visog-job-portal-ui/reg">registration</a></li>
+				<li><a href="/visog-job-portal-ui/user">login</a></li>
+			</ul>
+		</div>
+<div class="content" ng-app="ProjectDetailsManagement" ng-controller="ProjectDetailsController">
+	<h1>Project Details Transaction</h1>
+	<form ng-submit="submitFiles()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add/Edit ProjectDetails</th>
+			</tr>
+			<tr>
+				<td>User </td>
+				<td><input type="text" ng-model="projectDetailsForm.user" /></td>
+			</tr>
+
+			<tr>
+				<td>Job Responsibilities </td>
+				<td><input type="text" ng-model="projectDetailsForm.jobResponsibilities" /></td>
+			</tr>
+			
+			<tr>
+				<td>Project Details </td>
+				<td><input type="text" ng-model="projectDetailsForm.projectDetails" /></td>
+			</tr>
+			<tr>
+				<td>Project Title </td>
+				<td><input type="text" ng-model="projectDetailsForm.projectTitle" /></td>
+			</tr>
+			<tr>
+				<td>Employment Type </td>
+				<td><input type="text" ng-model="projectDetailsForm.employmentType" /></td>
+			</tr>
+			<tr>
+				<td>Client Name </td>
+				<td><input type="text" ng-model="projectDetailsForm.clientName" /></td>
+			</tr>
+			
+			<tr>
+				<td>Duration From </td>
+				<td><input type="text" ng-model="filesForm.durationFrom" /></td>
+			</tr>
+			
+			<tr>
+				<td>Duration To </td>
+				<td><input type="text" ng-model="projectDetailsForm.durationTo" /></td>
+			</tr>
+			
+			<tr>
+				<td>Team Size </td>
+				<td><input type="text" ng-model="projectDetailsForm.teamSize" /></td>
+			</tr>
+			
+			<tr>
+				<td>Technologies Used </td>
+				<td><input type="text" ng-model="projectDetailsForm.technologiesUsed" /></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+	<table>
+		<tr>
+
+			<th>user</th>
+			<th>jobResponsibilities</th>
+			<th>projectDetails</th>
+			<th>projectTitle</th>
+			<th>employmentType</th>
+			<th>clientName</th>
+			<th>durationFrom</th>
+			<th>durationTo</th>
+			<th>teamSize</th>
+			<th>technologiesUsed</th>
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="projectDetails in projectDetails">
+
+			<td>{{ projectDetails.user }}</td>
+			<td>{{ projectDetails.jobResponsibilities }}</td>
+			<td>{{ projectDetails.projectDetails }}</td>
+			<td>{{projectDetails.projectTitle}}</td>
+			<td>{{projectDetails.employmentType}}</td>
+			<td>{{projectDetails.clientName}}</td>
+			<td>{{ projectDetails.durationFrom }}</td>
+			<td>{{ projectDetails.durationTo }}</td>
+			<td>{{ projectDetails.teamSize }}</td>
+			<td>{{ projectDetails.technologiesUsed }}</td>
+
+			<td><a ng-click="editProjectDetails(projectDetails)" class="blue-button">Edit</a>
+				| <a ng-click="deleteProjectDetails(projectDetails)" onclick="deleteProjectDetails(projectDetails)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+</div>
+</div>
+	<!-- <script src="static/js/gender.js"></script> -->
+	<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+	<!-- 	<link rel="stylesheet" type="text/css" href="staic/css/master.css" media="screen" /> -->
+</body>
+</html>

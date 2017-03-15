@@ -1,0 +1,42 @@
+.ng-invalid.ng-dirty{
+  border-color: #FA787E;
+}
+.ng-valid.ng-dirty{
+  border-color: #78FA89;
+}
+.ng-password.ng-error{
+	border-color:#78FA89;
+
+}
+.ng-landline.ng-error{
+	border-color:#78FA89;
+}
+.form-group
+{
+	 background-color:SteelBlue;
+    color:white;
+    border:1px solid blue;
+    padding:50px;
+    margin:30px;
+    font-size:150%; 
+    color:white;
+    border:1px solid grey;
+   
+	
+	
+}
+
+body{
+	padding: 100px;
+}
+
+label {
+	font-weight: bold;
+	display: block;
+	width: 150px;
+	float: left;
+}
+span.req {
+    color:maroon;
+    font-size: 112%;
+}

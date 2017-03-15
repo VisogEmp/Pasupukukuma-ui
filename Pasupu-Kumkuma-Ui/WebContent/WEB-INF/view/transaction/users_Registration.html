@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>User Registration</title>
+
+<link
+	href="/visog-job-portal-ui/resources/assets/css/bootstrap.css"
+	rel="stylesheet" />
+
+	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script>
+	var app = angular.module("myApp", []);
+	//Controller Part
+	app
+			.controller(
+					"myCtrl",
+					function($scope, $http) {
+//alert('hi');
+						$scope.registrationForm = [];
+						_refreshGenderData();
+
+						$scope.registrationForm = {
+							id : -1,
+							fname : "",
+							mname : "",
+							lname : "",
+							dob : "",
+							email : "",
+							password : "",
+							mobile : "",
+							confirmpassword : ""
+						};
+
+						// Now load the data from server
+						//	_refreshGenderData();
+
+						//  alert('hi');
+						///////////
+						$scope.submitFile = function() {
+
+							var method = "";
+							var url = "";
+							// alert($scope.registrationForm.id);
+							if ($scope.registrationForm.id == -1
+									|| $scope.registrationForm.id == undefined) {
+								//Id is absent in form data, it is create new file operation
+								      
+								method = "POST";
+								url = 'http://localhost:8080/visog-job-portal-api/registration/job_seeker';
+								
+								$http
+										.post(
+												url,
+												{
+													"firstName" : $scope.registrationForm.fname,
+													"middleName" : $scope.registrationForm.mname,
+													"lastName" : $scope.registrationForm.lname,
+													"email" : $scope.registrationForm.email,
+													"alternativeEmail" : $scope.registrationForm.a_email,
+													"gender" : $scope.registrationForm.GenderGroup,
+													"dob" : $scope.registrationForm.dob,
+													"password" : $scope.registrationForm.password,
+													"phone" : $scope.registrationForm.mobile,
+													"landline" : $scope.registrationForm.landline
+												}).then(_success, _error);
+								alert(url);
+
+							} else {
+
+								//Id is present in form data, it is edit file operation
+								id = $scope.registrationForm.id;
+								method = "PUT";
+								url = 'http://localhost:8080/visog-job-portal-api/registration/job_seeker/'
+										+ id;
+								$http
+										.post(
+												url,
+												{
+													"firstName" : $scope.registrationForm.fname,
+													"middleName" : $scope.registrationForm.mname,
+													"lastName" : $scope.registrationForm.lname,
+													"email" : $scope.registrationForm.email,
+													"alternativeEmail" : $scope.registrationForm.a_email,
+													"gender" : $scope.registrationForm.GenderGroup,
+													"dob" : $scope.registrationForm.dob,
+													"password" : $scope.registrationForm.password,
+													"phone" : $scope.registrationForm.mobile,
+													"landline" : $scope.registrationForm.landline
+												}).then(_success, _error);
+								$scope.registrationForm.id = -1;
+							}
+						};
+
+						///////////
+						//alert('hi fh');
+						function _refreshGenderData() {
+							$http(
+									{
+										method : 'GET',
+										url : 'http://localhost:8080/visog-job-portal-api/master/gender/'
+									}).then(function successCallback(response) {
+
+								$scope.genders = response.data.data;
+								//alert('hijj dfdfdf 1'+response.data.data);
+							}, function errorCallback(response) {
+								console.log(response.statusText);
+							});//alert('jjffj');
+						}
+
+						function _success(response) {
+							alert(response.data.message);
+							if(response.data.statusCode!=300)
+								{
+							_refreshGenderData();
+							_clearFormData()
+								}
+						}
+
+						/* function _success(response) {
+							//	alert(response.data.message);
+								_refreshGenderData();
+								_clearFormData()
+							} */
+						//Clear the form
+						function _clearFormData() {
+							$scope.registrationForm.id == -1
+							$scope.registrationForm.fname = "";
+							$scope.registrationForm.mname = "";
+							$scope.registrationForm.lname = "";
+							$scope.registrationForm.dob = "";
+							$scope.registrationForm.GenderGroup = "";
+							$scope.registrationForm.a_email = "";
+							$scope.registrationForm.email = "";
+							$scope.registrationForm.landline = "";
+							$scope.registrationForm.password = "";
+							$scope.registrationForm.mobile = "";
+							$scope.registrationForm.confirmpassword = "";
+
+						}
+						;
+
+						function _error(response) {
+
+							console.log(response.statusText);
+						}
+					});
+</script>
+</head>
+<body>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-2">
+					<img
+						src="/visog-job-portal-ui//resources/image/images.jpg"
+						width="80" height="80" />
+				</div>
+				<div class="col-md-10">
+					<p class="header-title">Job Portal</p>
+					<p class="header-subtitle">Registration page</p>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div id="andromedaApp">
+		<div  ng-app="myApp" ng-controller="myCtrl">
+			<div class="loginContainer">
+				<div class="row">
+					<div class="col-sm-6 col-md-4 col-md-offset-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Register Here</h3>
+							</div>
+							<div class="panel-body">
+								<img class="profile-img"
+									src="/visog-job-portal-ui/resources/image/userLogin.png"/userLogin.png"
+									alt="" width="100px" height="100px">
+								
+								  <form class="register" id="registration" ng-submit="submitFile()">
+								 <label> <span style="color:red;font-weight:bold">*</span><strong>First Name:</strong></label>
+									<div class="form-group">
+										<input class="form-control" placeholder="Enter First Name"
+											ng-model="registrationForm.fname" autofocus
+											required="required" />
+									</div>
+									  <label> <strong>Middle Name:</strong></label>
+									<div class="form-group">
+										<input class="form-control" placeholder="Enter Middle Name"
+											ng-model="registrationForm.mname" autofocus />
+									</div>
+									   <label> <span style="color:red;font-weight:bold">*</span><strong>Last Name:</strong></label>
+									<div class="form-group">
+										<input class="form-control" placeholder="Enter Last Name"
+											ng-model="registrationForm.lname" autofocus
+											required="required" />
+									</div>
+									  <label> <span style="color:red;font-weight:bold">*</span><strong>DateOfBirth:</strong></label>
+								<div class="form-group">
+										<input class="form-control" type="date"
+											placeholder="Enter DateOfBirth"
+											ng-model="registrationForm.dob" autofocus required="required" />
+									</div>
+									  <label> <span style="color:red;font-weight:bold">*</span><strong>Email:</strong></label>
+									<div class="form-group">
+										<input class="form-control" placeholder="Enter E-mail"
+											ng-model="registrationForm.email" autofocus required="required"
+											pattern="^[A-Za-z0-9.$]*[@][a-z]{3,6}.(com|gov|org|office|co.in|edu|in)" />
+									</div>
+								 <label> <span style="color:red;font-weight:bold">*</span><strong>Alternative Email:</strong></label>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Enter Alternative E-mail"
+											ng-model="registrationForm.a_email" autofocus
+											required="required"
+											pattern="^[A-Za-z0-9.$]*[@][a-z]{3,6}.(com|gov|org|office|co.in|edu|in)" />
+									</div>
+									 <label> <span style="color:red;font-weight:bold">*</span><strong>Mobile Number:</strong></label>
+									<div class="form-group">
+										<input class="form-control" placeholder="Enter Mobile Number"
+											ng-model="registrationForm.mobile" autofocus
+											required="required" />
+									</div>
+									 <label> <span style="color:red;font-weight:bold">*</span><strong>LandLine:</strong></label>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Enter landline Number"
+											ng-model="registrationForm.landline" autofocus
+											required="required" />
+									</div>
+									   <label> <span style="color:red;font-weight:bold">*</span><strong>Gender:</strong></label>
+									<div class ="form-group" ng-repeat="gender in genders">
+										<input type="radio" name="GenderGroup" value="{{gender.id}}"
+											ng-model="registrationForm.GenderGroup" required>{{gender.name}}
+									</div>
+									 <label> <span style="color:red;font-weight:bold">*</span><strong>Password:</strong></label>
+									<div class="form-group">
+										<input type="password" class="form-control"
+											placeholder="Enter the Password"
+											ng-model="registrationForm.password" required="required" />
+									</div>
+									   <label> <span style="color:red;font-weight:bold">*</span><strong>Confirm Password:</strong></label>
+									<div class="form-group">
+										<input type="password" class="form-control"
+											placeholder="Enter the ConfirmPassword"
+											ng-model="registrationForm.confirmpassword"
+											required="required" />
+									</div>
+									<div class="form-group">
+										 <input type="submit" value="SignUp" class="register-button">
+									</div>
+									<span class="clearfix"></span>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div id="errorDiv" class="col-sm-9 col-md-6 col-md-offset-3"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		
+
+</body>
+</html>

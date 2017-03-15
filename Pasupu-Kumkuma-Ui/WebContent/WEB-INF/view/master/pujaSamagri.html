@@ -1,0 +1,330 @@
+
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css"
+	href="/Pasupu-Kumkuma-Ui/resources/css/master.css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="resources/css/user.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<script src="resources/js/jquery-3.1.1.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+
+<script src="/Pasupu-Kumkuma-Ui/resources/js/jquery-3.1.1.min.js"></script>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(e) {
+		$('.masters').click(function() {
+			$(this).toggleClass('tap');
+
+		});
+
+		$('.transactions').click(function() {
+			$(this).toggleClass('tap');
+
+		});
+
+	});
+</script>
+<meta name="viewport"
+	content="width=device-width, initial-scale:1, user-scalable=0" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="/Pasupu-Kumkuma-Ui/resources/js/state.js"></script>
+<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+
+<script type="text/javascript">
+	var app = angular.module("PujaSamagriManagement", []);
+
+	//Controller Part
+	app
+			.controller(
+					"PujaSamagriController",
+					function($scope, $http) {
+
+						$scope.countries = [];
+						$scope.pujaSamagriForm = {
+							//  id : -1,
+							name : "",
+							description : "",
+							price : "",
+							duration : "",
+							photo : "",
+							samagriCount : "",
+							status : ""
+						};
+
+						//Now load the data from server
+						_refreshPujaSamagriData();
+
+						//HTTP POST/PUT methods for add/edit role 
+						// with the help of id, we are going to find out whether it is put or post operation
+
+						$scope.submitPujaSamagri = function() {
+
+							var method = "";
+							var url = "";
+							// alert($scope.roleForm.id);
+							if ($scope.pujaSamagriForm.id == -1
+									|| $scope.pujaSamagriForm.id == undefined) {
+								//Id is absent in form data, it is create new role operation
+
+								method = "POST";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja_samagri/';
+								$http
+										.post(
+												url,
+												{
+													"name" : $scope.pujaSamagriForm.name,
+													"description" : $scope.pujaSamagriForm.description,
+													"price" : $scope.pujaSamagriForm.price,
+													"duration" : $scope.pujaSamagriForm.duration,
+													"photo" : $scope.pujaSamagriForm.photo,
+													"samagriCount" : $scope.pujaSamagriForm.samagriCount,
+													"status" : $scope.pujaSamagriForm.status
+												}).then(_success, _error);
+
+							} else {
+
+								//Id is present in form data, it is edit role operation
+								id = $scope.pujaSamagriForm.id;
+								method = "PUT";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja_samagri/'
+										+ id;
+								$http
+										.put(
+												url,
+												{
+													"name" : $scope.pujaSamagriForm.name,
+													"description" : $scope.pujaSamagriForm.description,
+													"price" : $scope.pujaSamagriForm.price,
+													"duration" : $scope.pujaSamagriForm.duration,
+													"photo" : $scope.pujaSamagriForm.photo,
+													"samagriCount" : $scope.pujaSamagriForm.samagriCount,
+													"status" : $scope.pujaSamagriForm.status
+
+												}).then(_success, _error);
+								$scope.pujaSamagriForm.id = -1;
+							}
+							/*         
+							                   $http({
+							                       method : method,
+							                       url : url,
+							                       data : angular.toJson($scope.roleForm),
+							                       headers : {
+							                           'Content-Type' : 'application/json'
+							                       }
+							                   }).then( _success, _error ); */
+						};
+
+						//HTTP DELETE- delete role by Id
+						$scope.deletePujaSamagri = function(pujaSamagri) {
+							$http(
+									{
+										method : 'DELETE',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja_samagri/'
+												+ pujaSamagri.id
+									}).then(_success, _error);
+						};
+
+						// In case of edit, populate form fields and assign form.id with role id
+						$scope.editPujaSamagri = function(pujaSamagri) {
+
+							$scope.pujaSamagriForm.name = pujaSamagri.name;
+							$scope.pujaSamagriForm.description =pujaSamagri.description;
+							$scope.pujaSamagriForm.price =pujaSamagri.price;
+							$scope.pujaSamagriForm.duration =pujaSamagri.duration;
+							$scope.pujaSamagriForm.photo =pujaSamagri.photo;
+							$scope.pujaSamagriForm.samagriCount =pujaSamagri.samagriCount;
+							$scope.pujaSamagriForm.status =pujaSamagri.status;
+							$scope.pujaSamagriForm.id = pujaSamagri.id;
+						};
+
+						/* Private Methods */
+						//HTTP GET- get all countries collection
+						function _refreshPujaSamagriData() {
+							$http(
+									{
+										method : 'GET',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/master/puja_samagri/'
+									}).then(function successCallback(response) {
+								//alert(response.data.data)
+								$scope.pujaSamagris = response.data.data;
+							}, function errorCallback(response) {
+								console.log(response.statusText);
+							});
+						}
+
+						function _success(response) {
+
+							_refreshPujaSamagriData();
+							_clearFormData()
+						}
+
+						function _error(response) {
+
+							console.log(response.statusText);
+						}
+
+						//Clear the form
+						function _clearFormData() {
+							//  $scope.roleForm.id = -1;
+							$scope.pujaSamagriForm.name = "";
+							$scope.pujaSamagriForm.description ="";
+							$scope.pujaSamagriForm.price ="";
+							$scope.pujaSamagriForm.duration ="";
+							$scope.pujaSamagriForm.photo ="";
+							$scope.pujaSamagriForm.samagriCount ="";
+							$scope.pujaSamagriForm.status ="";
+
+						}
+						;
+					});
+</script>
+
+<title>AngularJS $http Rest example</title>
+
+</head>
+<body  ng-controller="MainCtrl">
+
+	<div id="header">
+		<div class="logo">
+			<a href="#">Pasupu<span>Kumkuma</span></a>
+		</div>
+
+	</div>
+	<a class="mobile" href="#">Menu</a>
+	<div id="container">
+		<div class="sidebar">
+			<ul id="nav">
+
+				<li class="masters"><a href="#">Masters<span class="sub"></span></a>
+					
+				<ul>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/roles">Roles</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/gender">Gender</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/country">Country</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/state">State</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/city">City</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/status">Status</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/raasi">Raasi</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/nakshatram">Nakshatram</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/puja">Puja</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaSamagri">PujaSamagri</a></li>
+				
+				
+				
+				</ul>
+				</li>
+				
+				<li class="transactions"><a href="#">Transactions<span class="sub"></span></a>
+				<ul>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/users">Users</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/address">Address</a></li>
+				
+				</ul>
+				</li>
+				<li><a href="/Pasupu-Kumkuma-Ui/reg">Registration</a></li>
+				<li><a href="/Pasupu-Kumkuma-Ui/user">Login</a></li>
+			
+
+
+			</ul>
+			</li>
+			</ul>
+			</div>
+
+
+<div class="content" ng-app="PujaSamagriManagement"
+	ng-controller="PujaSamagriController">
+	<h1>PujaSamagri Master</h1>
+	<form ng-submit="submitPujaSamagri()">
+		<table>
+
+			<tr>
+				<th colspan="2">Add/Edit pujaSamagri</th>
+			</tr>
+			<tr>
+				<td>PujaSamagri Name</td>
+				<td><input type="text" ng-model="pujaSamagriForm.name" /></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><input type="text" ng-model="pujaSamagriForm.description" /></td>
+			</tr>
+			<tr>
+				<td>Price</td>
+				<td><input type="text" ng-model="pujaSamagriForm.price" /></td>
+			</tr>
+			<tr>
+				<td>Duration</td>
+				<td><input type="text" ng-model="pujaSamagriForm.duration" /></td>
+			</tr>
+			<tr>
+				<td>Photo</td>
+				<td><input type="text" ng-model="pujaSamagriForm.photo" /></td>
+			</tr>
+			<tr>
+				<td>SamagriCount</td>
+				<td><input type="text" ng-model="pujaSamagriForm.samagriCount" /></td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td><input type="text" ng-model="pujaSamagriForm.status" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Submit"
+					class="blue-button" /></td>
+			</tr>
+		</table>
+	</form>
+
+	SearchBox:
+	<input type="text" ng-model="search" class="form-control search"
+		placeholder="searchText">
+
+
+	<table class="table table-striped table-bordered">
+		<tr>
+
+			<th>Name</th>
+			<th>Description</th>
+			<th>Price</th>
+			<th>Duration</th>
+			<th>Photo</th>
+			<th>SamagriCount</th>
+			<th>Status</th>
+			<th></th>
+
+		</tr>
+
+		<tr ng-repeat="pujaSamagri in pujaSamagris |filter:search"">
+
+			<td>{{ pujaSamagri.name }}</td>
+			<td>{{ pujaSamagri.description }}</td>
+			<td>{{ pujaSamagri.price}}</td>
+			<td>{{ pujaSamagri.duration }}</td>
+			<td>{{ pujaSamagri.photo }}</td>
+			<td>{{ pujaSamagri.samagriCount}}</td>
+			<td>{{ pujaSamagri.status }}</td>
+
+			<td><a ng-click="editPujaSamagri(pujaSamagri)"
+				class="blue-button">Edit</a> | <a
+				ng-click="deletePujaSamagri(pujaSamagri)" class="red-button">Delete</a></td>
+		</tr>
+
+	</table>
+	</div>
+	</div>
+	
+</body>
+</html>

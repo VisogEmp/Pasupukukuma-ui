@@ -1,0 +1,11 @@
+<html>
+<head>
+	<title>visog-job-portal-ui</title>
+</head>
+<body>
+ <center>
+  <h2>visog-job-portal-ui</h2>
+  <h4>${message}</h4>
+ </center>
+</body>
+</html>
