@@ -58,6 +58,9 @@
 		<h4>
 			<a href="/Pasupu-Kumkuma-Ui/index">index</a>
 		</h4>
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/address">Address</a>
+		</h4>
 		
 		
 	</center>
