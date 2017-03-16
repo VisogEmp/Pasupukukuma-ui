@@ -66,15 +66,15 @@ $(document).ready(function(e){
 				<ul>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/users">Users</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/address">Address</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/cartorders">CartOrders</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/cartOrders">CartOrders</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/contact">Contact</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/coupondetails">CouponDetails</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/couponvalue">CouponValue</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaorder">PujaOrder</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/userrequest">UserRequest</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaordersdetails">PujaOrdersDetails</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/userrequestsreply">UserRequestsReply</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/referaldetails">ReferalDetails</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/couponDetails">CouponDetails</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/couponValue">CouponValue</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaOrder">PujaOrder</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/userRequest">UserRequest</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaOrdersDetails">PujaOrdersDetails</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/userRequestsReply">UserRequestsReply</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/referalDetails">ReferalDetails</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/appsession">AppSession</a></li>
 				
 				</ul>

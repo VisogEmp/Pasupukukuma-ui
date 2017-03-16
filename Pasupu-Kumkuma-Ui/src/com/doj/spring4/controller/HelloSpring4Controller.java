@@ -71,9 +71,15 @@ public class HelloSpring4Controller {
 	public String pujasamagri() {
 		return "master/pujaSamagri";
 	}
+	
 	@RequestMapping(value = "/address", method = RequestMethod.GET)
 	public String address() {
 		return "transactional/address";
+	}
+	
+	@RequestMapping(value = "/pujaOrder", method = RequestMethod.GET)
+	public String pujaOrder() {
+		return "transactional/pujaOrder";
 	}
 	
 }

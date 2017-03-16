@@ -61,6 +61,9 @@
 		<h4>
 			<a href="/Pasupu-Kumkuma-Ui/address">Address</a>
 		</h4>
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/pujaOrder">PujaOrder</a>
+		</h4>
 		
 		
 	</center>
