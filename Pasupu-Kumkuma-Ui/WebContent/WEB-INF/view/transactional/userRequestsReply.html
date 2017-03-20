@@ -28,57 +28,49 @@ $(document).ready(function(e){
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 
  <script>
-	var app = angular.module("AddressManagement", []);
+	var app = angular.module("UserRequestsReplyManagement", []);
 
 	//Controller Part
 	app
 			.controller(
-					"AddressController",
+					"UserRequestsReplyController",
 					function($scope, $http) {
 
-						$scope.address = [];
-						$scope.addressForm = {
+						$scope.userRequestsReply = [];
+						$scope.userRequestsReplyForm = {
 							// id : -1,
-								addressLine1 : "",
-								addressLine2 : "",
-								zipcode : "",
-								state : "",
-								user : "",
-								city : "",
-								country : ""
+								reply : "",
+								request : "",
+								message : ""
 								
 						};
 
 						// Now load the data from server
-						_refreshAddressData();
+						_refreshUserRequestsReplyData();
 
 						// HTTP POST/PUT methods for add/edit role
 						// with the help of id, we are going to find out whether it
 						// is put or post operation
 
-						$scope.submitAddress = function() {
+						$scope.submitUserRequestsReply = function() {
 
 							var method = "";
 							var url = "";
 							// alert($scope.genderForm.id);
-							if ($scope.addressForm.id == -1
-									|| $scope.addressForm.id == undefined) {
+							if ($scope.userRequestsReplyForm.id == -1
+									|| $scope.userRequestsReplyForm.id == undefined) {
 								// Id is absent in form data, it is create new role
 								// operation
 
 								method = "POST";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/';
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequestsReply/';
 								$http
 										.post(
 												url,
 												{
-													"addressLine1" : $scope.addressForm.addressLine1,
-													"addressLine2" : $scope.addressForm.addressLine2,
-													"zipcode" : $scope.addressForm.zipcode,
-													"state" : $scope.addressForm.state,
-													"user" : $scope.addressForm.user,
-													"city" : $scope.addressForm.city,
-													"country" : $scope.addressForm.country
+													"reply" : $scope.userRequestsReplyForm.reply,
+													"request" : $scope.userRequestsReplyForm.request,
+													"message" : $scope.addressForm.message
 
 													
 												}).then(_success, _error);
@@ -87,25 +79,21 @@ $(document).ready(function(e){
 
 								// Id is present in form data, it is edit role
 								// operation
-								id = $scope.addressForm.id;
+								id = $scope.userRequestsReplyForm.id;
 								
 								method = "PUT";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequestsReply/'
 										+ id;
 								$http
 										.put(
 												url,
 												{
-													"addressLine1" : $scope.addressForm.addressLine1,
-													"addressLine2" : $scope.addressForm.addressLine2,
-													"zipcode" : $scope.addressForm.zipcode,
-													"state" : $scope.addressForm.state,
-													"user" : $scope.addressForm.user,
-													"city" : $scope.addressForm.city,
-													"country" : $scope.addressForm.country
+													"reply" : $scope.userRequestsReplyForm.reply,
+													"request" : $scope.userRequestsReplyForm.request,
+													"message" : $scope.userRequestsReplyForm.message
 
 												}).then(_success, _error);
-								$scope.addressForm.id = -1;
+								$scope.userRequestsReplyForm.id = -1;
 							}
 							/*
 							 * $http({ method : method, url : url, data :
@@ -116,26 +104,22 @@ $(document).ready(function(e){
 						};
 
 						// HTTP DELETE- delete role by Id
-						$scope.deleteAddress = function(address) {
+						$scope.deleteUserRequestsReply = function(userRequestsReply) {
 							$http(
 									{
 										method : 'DELETE',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
-												+ address.id
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequestsReply/'
+												+ userRequestsReply.id
 									}).then(_success, _error);
 						};
 
 						// In case of edit, populate form fields and assign form.id
 						// with role id
-						$scope.editAddress = function(address) {
+						$scope.editUserRequestsReply = function(userRequestsReply) {
 
-							$scope.addressForm.addressLine1 = address.addressLine1;
-							$scope.addressForm.addressLine2 = address.addressLine2;
-							$scope.addressForm.zipcode = address.zipcode;
-							$scope.addressForm.state = address.state;
-							$scope.addressForm.user = address.user;
-							$scope.addressForm.city = address.city;
-							$scope.addressForm.country = address.country;
+							$scope.userRequestsReplyForm.reply = userRequestsReply.reply;
+							$scope.userRequestsReplyForm.request = userRequestsReply.request;
+							$scope.userRequestsReplyForm.message = userRequestsReply.message;
 							
 							
 							
@@ -143,14 +127,14 @@ $(document).ready(function(e){
 
 						/* Private Methods */
 						// HTTP GET- get all countries collection
-						function _refreshAddressData() {
+						function _refreshUserRequestsReplyData() {
 							$http(
 									{
 										method : 'GET',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequestsReply/'
 									}).then(function successCallback(response) {
 								// alert(response.data.data)
-								$scope.addresss = response.data.data;
+								$scope.userRequestsReplys = response.data.data;
 							}, function errorCallback(response) {
 								console.log(response.statusText);
 							});
@@ -158,7 +142,7 @@ $(document).ready(function(e){
 
 						function _success(response) {
 
-							_refreshAddressData();
+							_refreshUserRequestsReplyData();
 							_clearFormData()
 						}
 
@@ -170,13 +154,9 @@ $(document).ready(function(e){
 						// Clear the form
 						function _clearFormData() {
 							// $scope.genderForm.id = -1;
-							$scope.addressForm.addressLine1 = "";
-							$scope.addressForm.addressLine2 = "";
-							$scope.addressForm.zipcode = "";
-							$scope.addressForm.state = "";
-							$scope.addressForm.user = "";							
-							$scope.addressForm.city = "";							
-							$scope.addressForm.country = "";
+							$scope.userRequestsReplyForm.reply = "";
+							$scope.userRequestsReplyForm.request = "";
+							$scope.userRequestsReplyForm.message = "";
 
 						}
 						;
@@ -312,52 +292,30 @@ td, th {
 				<li><a href="/Pasupu-Kumkuma-Ui/user">login</a></li>
 			</ul>
 		</div>
-<div class="content" ng-app="AddressManagement" ng-controller="AddressController">
-	<h1>Address Transaction</h1>
-	<form ng-submit="submitAddress()">
+<div class="content" ng-app="UserRequestsReplyManagement" ng-controller="UserRequestsReplyController">
+	<h1>UserRequestsReply</h1>
+	<form ng-submit="submitUserRequestsReply()">
 		<table>
 
 			<tr>
-				<th colspan="2">Add/Edit Address</th>
+				<th colspan="2">Add/Edit UserRequestsReply</th>
 			</tr>
 			<tr>
 			
 			
-				<td>Address Line1</td>
-				<td><input type="text" ng-model="addressForm.addressLine1" /></td>
+				<td>Reply</td>
+				<td><input type="text" ng-model="userRequestsReplyForm.reply" /></td>
 			</tr>
 			<tr>
-				<td>Address Line2</td>
-				<td><input type="text" ng-model="addressForm.addressLine2" /></td>
-			</tr>
 			
-			<tr>
-				<td>ZipCode</td>
-				<td><input type="text" ng-model="addressForm.zipcode" /></td>
-			</tr>
-			<tr>
-				<td>State</td>
-				<td><input type="text" ng-model="addressForm.state" /></td>
+				<td>Request</td>
+				<td><input type="text" ng-model="userRequestsReplyForm.request" /></td>
 			</tr>
 			
 			<tr>
-				<td>User</td>
-				<td><input type="text" ng-model="addressForm.user" /></td>
+				<td>Message</td>
+				<td><input type="text" ng-model="userRequestsReplyForm.message" /></td>
 			</tr>
-			<tr>
-				<td>City</td>
-				<td><input type="text" ng-model="addressForm.city" /></td>
-			</tr>
-			
-			
-			
-			<tr>
-				<td>Country</td>
-				<td><input type="text" ng-model="addressForm.country" /></td>
-			</tr>
-			
-			
-			
 			
 			<tr>
 				<td colspan="2"><input type="submit" value="Submit"
@@ -368,35 +326,25 @@ td, th {
 	<table>
 		<tr>
 
-			<th>Address Line1</th>
-			<th>Address Line2</th>
-			<th>ZipCode</th>
-			<th>State</th>
-			<th>User</th>
-			<th>City</th>
-			<th>Country</th>
+			<th>Reply</th>
+			<th>Request</th>
+			<th>Message</th>
+
 			
 			<th></th>
 
 		</tr>
 
-		<tr ng-repeat="address in addresss">
+		<tr ng-repeat="userRequestsReply in userRequestsReplys">
 
-						<td>{{ address.addressLine1 }}</td>
+						<td>{{ userRequestsReply.reply }}</td>
 						
-						<td>{{ address.addressLine2 }}</td>
+						<td>{{ userRequestsReply.request }}</td>
 			
-						<td>{{ address.zipcode }}</td>
-						
-						<td>{{ address.state }}</td>
-						
-						<td>{{ address.users }}</td>
+						<td>{{ userRequestsReply.message }}</td>
+
 			
-						<td>{{ address.city }}</td>
-							
-						<td>{{ address.country }}</td>
-			
-			<td><a ng-click="editAddress(address)" class="blue-button">Edit</a>	| <a ng-click="deleteAddress(address)" onclick="deleteAddress(address)" class="red-button">Delete</a></td>
+			<td><a ng-click="editUserRequestsReply(userRequestsReply)" class="blue-button">Edit</a>	| <a ng-click="deleteUserRequestsReply(userRequestsReply)" onclick="deleteUserRequestsReply(userRequestsReply)" class="red-button">Delete</a></td>
 		</tr>
 
 	</table>

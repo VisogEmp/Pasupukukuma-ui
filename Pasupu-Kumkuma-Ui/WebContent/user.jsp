@@ -72,7 +72,7 @@ $(document).ready(function(e){
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/couponValue">CouponValue</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaOrder">PujaOrder</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/userRequest">UserRequest</a></li>
-				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaOrdersDetails">PujaOrdersDetails</a></li>
+				<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaOrderDetails">PujaOrdersDetails</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/userRequestsReply">UserRequestsReply</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/referalDetails">ReferalDetails</a></li>
 				<li class="child"><a href="/Pasupu-Kumkuma-Ui/appsession">AppSession</a></li>

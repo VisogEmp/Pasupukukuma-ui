@@ -28,57 +28,53 @@ $(document).ready(function(e){
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 
  <script>
-	var app = angular.module("AddressManagement", []);
+	var app = angular.module("ReferalDetailsManagement", []);
 
 	//Controller Part
 	app
 			.controller(
-					"AddressController",
+					"ReferalDetailsController",
 					function($scope, $http) {
 
-						$scope.address = [];
-						$scope.addressForm = {
+						$scope.referalDetails = [];
+						$scope.referalDetailsForm = {
 							// id : -1,
-								addressLine1 : "",
-								addressLine2 : "",
-								zipcode : "",
-								state : "",
-								user : "",
-								city : "",
-								country : ""
+								referredBy : "",
+								referredToEmail : "",
+								coupanCode : "",
+								referalState : ""
+								
 								
 						};
 
 						// Now load the data from server
-						_refreshAddressData();
+						_refreshReferalDetailsData();
 
 						// HTTP POST/PUT methods for add/edit role
 						// with the help of id, we are going to find out whether it
 						// is put or post operation
 
-						$scope.submitAddress = function() {
+						$scope.submitReferalDetails = function() {
 
 							var method = "";
 							var url = "";
 							// alert($scope.genderForm.id);
-							if ($scope.addressForm.id == -1
-									|| $scope.addressForm.id == undefined) {
+							if ($scope.referalDetailsForm.id == -1
+									|| $scope.referalDetailsForm.id == undefined) {
 								// Id is absent in form data, it is create new role
 								// operation
 
 								method = "POST";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/';
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/referalDetails/';
 								$http
 										.post(
 												url,
 												{
-													"addressLine1" : $scope.addressForm.addressLine1,
-													"addressLine2" : $scope.addressForm.addressLine2,
-													"zipcode" : $scope.addressForm.zipcode,
-													"state" : $scope.addressForm.state,
-													"user" : $scope.addressForm.user,
-													"city" : $scope.addressForm.city,
-													"country" : $scope.addressForm.country
+													"referredBy" : $scope.referalDetailsForm.referredBy,
+													"referredToEmail" : $scope.referalDetailsForm.referredToEmail,
+													"coupanCode" : $scope.referalDetailsForm.coupanCode,
+													"referalState" : $scope.referalDetailsForm.referalState
+
 
 													
 												}).then(_success, _error);
@@ -87,25 +83,22 @@ $(document).ready(function(e){
 
 								// Id is present in form data, it is edit role
 								// operation
-								id = $scope.addressForm.id;
+								id = $scope.referalDetailsForm.id;
 								
 								method = "PUT";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/referalDetails/'
 										+ id;
 								$http
 										.put(
 												url,
 												{
-													"addressLine1" : $scope.addressForm.addressLine1,
-													"addressLine2" : $scope.addressForm.addressLine2,
-													"zipcode" : $scope.addressForm.zipcode,
-													"state" : $scope.addressForm.state,
-													"user" : $scope.addressForm.user,
-													"city" : $scope.addressForm.city,
-													"country" : $scope.addressForm.country
+													"referredBy" : $scope.referalDetailsForm.referredBy,
+													"referredToEmail" : $scope.referalDetailsForm.referredToEmail,
+													"coupanCode" : $scope.referalDetailsForm.coupanCode,
+													"referalState" : $scope.referalDetailsForm.referalState
 
 												}).then(_success, _error);
-								$scope.addressForm.id = -1;
+								$scope.referalDetailsForm.id = -1;
 							}
 							/*
 							 * $http({ method : method, url : url, data :
@@ -116,26 +109,24 @@ $(document).ready(function(e){
 						};
 
 						// HTTP DELETE- delete role by Id
-						$scope.deleteAddress = function(address) {
+						$scope.deleteReferalDetails = function(referalDetails) {
 							$http(
 									{
 										method : 'DELETE',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
-												+ address.id
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/referalDetails/'
+												+ referalDetails.id
 									}).then(_success, _error);
 						};
 
 						// In case of edit, populate form fields and assign form.id
 						// with role id
-						$scope.editAddress = function(address) {
+						$scope.editReferalDetails = function(referalDetails) {
 
-							$scope.addressForm.addressLine1 = address.addressLine1;
-							$scope.addressForm.addressLine2 = address.addressLine2;
-							$scope.addressForm.zipcode = address.zipcode;
-							$scope.addressForm.state = address.state;
-							$scope.addressForm.user = address.user;
-							$scope.addressForm.city = address.city;
-							$scope.addressForm.country = address.country;
+							$scope.referalDetailsForm.referredBy = referalDetails.referredBy;
+							$scope.referalDetailsForm.referredToEmail = referalDetails.referredToEmail;
+							$scope.referalDetailsForm.coupanCode = referalDetails.coupanCode;
+							$scope.referalDetailsForm.referalState = referalDetails.referalState;
+
 							
 							
 							
@@ -143,14 +134,14 @@ $(document).ready(function(e){
 
 						/* Private Methods */
 						// HTTP GET- get all countries collection
-						function _refreshAddressData() {
+						function _refreshReferalDetailsData() {
 							$http(
 									{
 										method : 'GET',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/referalDetails/'
 									}).then(function successCallback(response) {
 								// alert(response.data.data)
-								$scope.addresss = response.data.data;
+								$scope.referalDetailss = response.data.data;
 							}, function errorCallback(response) {
 								console.log(response.statusText);
 							});
@@ -158,7 +149,7 @@ $(document).ready(function(e){
 
 						function _success(response) {
 
-							_refreshAddressData();
+							_refreshReferalDetailsData();
 							_clearFormData()
 						}
 
@@ -170,13 +161,11 @@ $(document).ready(function(e){
 						// Clear the form
 						function _clearFormData() {
 							// $scope.genderForm.id = -1;
-							$scope.addressForm.addressLine1 = "";
-							$scope.addressForm.addressLine2 = "";
-							$scope.addressForm.zipcode = "";
-							$scope.addressForm.state = "";
-							$scope.addressForm.user = "";							
-							$scope.addressForm.city = "";							
-							$scope.addressForm.country = "";
+							$scope.referalDetailsForm.referredBy = "";
+							$scope.referalDetailsForm.referredToEmail = "";
+							$scope.referalDetailsForm.coupanCode = "";
+							$scope.referalDetailsForm.referalState = "";
+
 
 						}
 						;
@@ -312,51 +301,34 @@ td, th {
 				<li><a href="/Pasupu-Kumkuma-Ui/user">login</a></li>
 			</ul>
 		</div>
-<div class="content" ng-app="AddressManagement" ng-controller="AddressController">
-	<h1>Address Transaction</h1>
-	<form ng-submit="submitAddress()">
+<div class="content" ng-app="ReferalDetailsManagement" ng-controller="ReferalDetailsController">
+	<h1>Referal Details</h1>
+	<form ng-submit="submitReferalDetails()">
 		<table>
 
 			<tr>
-				<th colspan="2">Add/Edit Address</th>
+				<th colspan="2">Add/Edit ReferalDetails</th>
 			</tr>
-			<tr>
-			
-			
-				<td>Address Line1</td>
-				<td><input type="text" ng-model="addressForm.addressLine1" /></td>
-			</tr>
-			<tr>
-				<td>Address Line2</td>
-				<td><input type="text" ng-model="addressForm.addressLine2" /></td>
-			</tr>
-			
-			<tr>
-				<td>ZipCode</td>
-				<td><input type="text" ng-model="addressForm.zipcode" /></td>
-			</tr>
-			<tr>
-				<td>State</td>
-				<td><input type="text" ng-model="addressForm.state" /></td>
-			</tr>
-			
-			<tr>
-				<td>User</td>
-				<td><input type="text" ng-model="addressForm.user" /></td>
-			</tr>
-			<tr>
-				<td>City</td>
-				<td><input type="text" ng-model="addressForm.city" /></td>
-			</tr>
-			
 			
 			
 			<tr>
-				<td>Country</td>
-				<td><input type="text" ng-model="addressForm.country" /></td>
+				<td>Referred By</td>
+				<td><input type="text" ng-model="referalDetailsForm.referredBy" /></td>
 			</tr>
 			
+			<tr>
+				<td>Referred To Email</td>
+				<td><input type="text" ng-model="referalDetailsForm.referredToEmail" /></td>
+			</tr>
 			
+			<tr>
+				<td>Coupan Code</td>
+				<td><input type="text" ng-model="referalDetailsForm.coupanCode" /></td>
+			</tr>
+			<tr>
+				<td>Referal State</td>
+				<td><input type="text" ng-model="referalDetailsForm.referalState" /></td>
+			</tr>
 			
 			
 			<tr>
@@ -368,35 +340,27 @@ td, th {
 	<table>
 		<tr>
 
-			<th>Address Line1</th>
-			<th>Address Line2</th>
-			<th>ZipCode</th>
-			<th>State</th>
-			<th>User</th>
-			<th>City</th>
-			<th>Country</th>
+			<th>Referred By</th>
+			<th>Referred To Email</th>
+			<th>Coupan Code</th>
+			<th>Referal State</th>
 			
 			<th></th>
 
 		</tr>
 
-		<tr ng-repeat="address in addresss">
+		<tr ng-repeat="referalDetails in referalDetailss">
 
-						<td>{{ address.addressLine1 }}</td>
+						<td>{{ referalDetails.referredBy }}</td>
 						
-						<td>{{ address.addressLine2 }}</td>
+						<td>{{ referalDetails.referredToEmail }}</td>
 			
-						<td>{{ address.zipcode }}</td>
+						<td>{{ referalDetails.coupanCode }}</td>
 						
-						<td>{{ address.state }}</td>
-						
-						<td>{{ address.users }}</td>
+						<td>{{ referalDetails.referalState }}</td>
+
 			
-						<td>{{ address.city }}</td>
-							
-						<td>{{ address.country }}</td>
-			
-			<td><a ng-click="editAddress(address)" class="blue-button">Edit</a>	| <a ng-click="deleteAddress(address)" onclick="deleteAddress(address)" class="red-button">Delete</a></td>
+			<td><a ng-click="editReferalDetails(referalDetails)" class="blue-button">Edit</a>	| <a ng-click="deleteReferalDetails(referalDetails)" onclick="deleteReferalDetails(referalDetails)" class="red-button">Delete</a></td>
 		</tr>
 
 	</table>

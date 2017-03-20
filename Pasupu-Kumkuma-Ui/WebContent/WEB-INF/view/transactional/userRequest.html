@@ -1,0 +1,354 @@
+
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css"
+	href="/Pasupu-Kumkuma-Ui/resources/css/master.css" />
+<link rel="stylesheet" type="text/css"
+	href="/Pasupu-Kumkuma-Ui/resources/css/user.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<script src="/Pasupu-Kumkuma-Ui/resources/js/jquery-3.1.1.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(e) {
+		$('.masters').click(function() {
+			$(this).toggleClass('tap');
+
+		});
+		$('.transactions').click(function() {
+			$(this).toggleClass('tap');
+
+		});
+
+	});
+</script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+
+<script>
+	var app = angular.module("UserRequestManagement", []);
+
+	//Controller Part
+	app
+			.controller(
+					"UserRequestController",
+					function($scope, $http) {
+
+						$scope.UserRequest = [];
+						$scope.userRequestForm = {
+							// id : -1,
+							request : "",
+							subject : "",
+							message : ""
+
+						};
+
+						// Now load the data from server
+						_refreshUserRequestData();
+
+						// HTTP POST/PUT methods for add/edit role
+						// with the help of id, we are going to find out whether it
+						// is put or post operation
+
+						$scope.submitUserRequest = function() {
+
+							var method = "";
+							var url = "";
+							// alert($scope.genderForm.id);
+							if ($scope.userRequestForm.id == -1
+									|| $scope.userRequestForm.id == undefined) {
+								// Id is absent in form data, it is create new role
+								// operation
+
+								method = "POST";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequest/';
+								$http.post(url, {
+									"request" : $scope.userRequestForm.request,
+									"subject" : $scope.userRequestForm.subject,
+									"message" : $scope.userRequestForm.message,
+
+								}).then(_success, _error);
+
+							} else {
+
+								// Id is present in form data, it is edit role
+								// operation
+								id = $scope.userRequestForm.id;
+
+								method = "PUT";
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequest/'
+										+ id;
+								$http.put(url, {
+									"request" : $scope.userRequestForm.request,
+									"subject" : $scope.userRequestForm.subject,
+									"message" : $scope.userRequestForm.message,
+
+								}).then(_success, _error);
+								$scope.userRequestForm.id = -1;
+							}
+							/*
+							 * $http({ method : method, url : url, data :
+							 * angular.toJson($scope.genderForm), headers : {
+							 * 'Content-Type' : 'application/json' } }).then(
+							 * _success, _error );
+							 */
+						};
+
+						// HTTP DELETE- delete role by Id
+						$scope.deleteUserRequest = function(userRequest) {
+							$http(
+									{
+										method : 'DELETE',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequest/'
+												+ userRequest.id
+									}).then(_success, _error);
+						};
+
+						// In case of edit, populate form fields and assign form.id
+						// with role id
+						$scope.editUserRequest = function(userRequest) {
+
+							$scope.userRequestForm.request = userRequest.request;
+							$scope.userRequestForm.subject = userRequest.subject;
+							$scope.userRequestForm.message = userRequest.message;
+
+						};
+
+						/* Private Methods */
+						// HTTP GET- get all countries collection
+						function _refreshUserRequestData() {
+							$http(
+									{
+										method : 'GET',
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/userRequest/'
+									}).then(function successCallback(response) {
+								// alert(response.data.data)
+								$scope.userRequests = response.data.data;
+							}, function errorCallback(response) {
+								console.log(response.statusText);
+							});
+						}
+
+						function _success(response) {
+
+							_refreshUserRequestData();
+							_clearFormData()
+						}
+
+						function _error(response) {
+
+							console.log(response.statusText);
+						}
+
+						// Clear the form
+						function _clearFormData() {
+							// $scope.genderForm.id = -1;
+							$scope.userRequest.request = "";
+							$scope.userRequest.message = "";
+							$scope.userRequest.subject = "";
+
+						}
+						;
+					});
+</script>
+<style>
+.blue-button {
+	background: #25A6E1;
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#25A6E1',
+		endColorstr='#188BC0', GradientType=0);
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #1A87B9
+}
+
+.red-button {
+	background: #CD5C5C;
+	padding: 3px 5px;
+	color: #fff;
+	font-family: 'Helvetica Neue', sans-serif;
+	font-size: 12px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #CD5C5C
+}
+
+table {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	width: 50%;
+}
+
+caption {
+	text-align: left;
+	color: silver;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+}
+
+th {
+	background: SteelBlue;
+	color: white;
+}
+
+tbody tr:nth-child(even) {
+	background: WhiteSmoke;
+}
+
+tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+tbody tr td:nth-child(3), tbody tr td:nth-child(4) {
+	text-align: center;
+	font-family: monospace;
+}
+
+tfoot {
+	background: SeaGreen;
+	color: white;
+	text-align: right;
+}
+
+tfoot tr th:last-child {
+	font-family: monospace;
+}
+
+td, th {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: left;
+	padding: 5px 10px;
+}
+</style>
+
+
+<title>AngularJS $http Rest example</title>
+<head>
+<body>
+	<div id="header">
+		<div class="logo">
+			<a href="#">Pasupu<span>Kumkuma</span></a>
+		</div>
+
+	</div>
+
+	<div id="container">
+		<div class="sidebar">
+			<ul id="nav">
+
+				<li class="masters"><a href="#">Masters<span class="sub"></span></a>
+					<ul>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/roles">Roles</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/gender">Gender</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/country">Country</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/state">State</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/city">City</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/status">Status</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/raasi">Raasi</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/nakshatram">Nakshatram</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/puja">Puja</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaSamagri">PujaSamagri</a></li>
+
+					</ul></li>
+
+
+				<li class="transactions"><a href="#">Transactions<span
+						class="sub"></span></a>
+					<ul>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/users">Users</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/address">Address</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/cartOrders">CartOrders</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/contact">Contact</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/couponDetails">CouponDetails</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/couponValue">CouponValue</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/pujaOrder">PujaOrder</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/userRequest">UserRequest</a></li>
+						<li class="child"><a
+							href="/Pasupu-Kumkuma-Ui/pujaOrderDetails">PujaOrdersDetails</a></li>
+						<li class="child"><a
+							href="/Pasupu-Kumkuma-Ui/userRequestsReply">UserRequestsReply</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/referalDetails">ReferalDetails</a></li>
+						<li class="child"><a href="/Pasupu-Kumkuma-Ui/appsession">AppSession</a></li>
+
+
+					</ul></li>
+				<li><a href="/Pasupu-Kumkuma-Ui/reg">registration</a></li>
+				<li><a href="/Pasupu-Kumkuma-Ui/user">login</a></li>
+			</ul>
+		</div>
+		<div class="content" ng-app="UserRequestManagement"
+			ng-controller="UserRequestController">
+			<h1>UserRequest Transaction</h1>
+			<form ng-submit="submitUserRequest()">
+				<table>
+
+					<tr>
+						<th colspan="2">Add/Edit UserRequest</th>
+					</tr>
+
+
+					<tr>
+						<td>Request</td>
+						<td><input type="text" ng-model="userRequestForm.request" /></td>
+					</tr>
+					<tr>
+
+						<td>Subject</td>
+						<td><input type="text" ng-model="userRequestForm.subject" /></td>
+					</tr>
+
+					<tr>
+						<td>Message</td>
+						<td><input type="text" ng-model="userRequestForm.message" /></td>
+					</tr>
+
+
+					<tr>
+						<td colspan="2"><input type="submit" value="Submit"
+							class="blue-button" /></td>
+					</tr>
+				</table>
+			</form>
+			<table>
+				<tr>
+
+					<th>Request</th>
+					<th>Subject</th>
+					<th>Message</th>
+
+					<th></th>
+
+				</tr>
+
+				<tr ng-repeat="userRequest in userRequests">
+
+					<td>{{ userRequest.request}}</td>
+
+					<td>{{ userRequest.subject }}</td>
+					<td>{{ userRequest.message }}</td>
+
+
+					<td><a ng-click="editUserRequest(userRequest)"
+						class="blue-button">Edit</a> | <a
+						ng-click="deleteUserRequest(userRequest)"
+						onclick="deleteUserRequest(userRequest)" class="red-button">Delete</a></td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+	<!-- <script src="static/js/gender.js"></script> -->
+	<!-- 	<style rel="stylesheet" href ="css/master.css"></style> -->
+	<!-- 	<link rel="stylesheet" type="text/css" href="staic/css/master.css" media="screen" /> -->
+</body>
+</html>

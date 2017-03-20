@@ -64,6 +64,33 @@
 		<h4>
 			<a href="/Pasupu-Kumkuma-Ui/pujaOrder">PujaOrder</a>
 		</h4>
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/cartOrders">CartOrders</a>
+		</h4>
+		
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/pujaOrderDetails">PujaOrderDetails</a>
+		</h4>
+		
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/userRequest">UserRequest</a>
+		</h4>
+		
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/couponValue">couponValue</a>
+		</h4>
+		
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/userRequestsReply">userRequestsReply</a>
+		</h4>
+		
+		<h4>
+			<a href="/Pasupu-Kumkuma-Ui/referalDetails">referalDetails</a>
+		</h4>
+		
+		
+		
+		
 		
 		
 	</center>

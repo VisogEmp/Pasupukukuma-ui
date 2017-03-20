@@ -82,4 +82,37 @@ public class HelloSpring4Controller {
 		return "transactional/pujaOrder";
 	}
 	
+	@RequestMapping(value = "/cartOrders", method = RequestMethod.GET)
+	public String cartOrder() {
+		return "transactional/cartOrders";
+	}
+	
+	@RequestMapping(value = "/userRequest", method = RequestMethod.GET)
+	public String userRequest() {
+		return "transactional/userRequest";
+	}
+	
+	@RequestMapping(value = "/pujaOrderDetails", method = RequestMethod.GET)
+	public String pujaOrderDetails() {
+		return "transactional/pujaOrderDetails";
+	}
+	
+	@RequestMapping(value = "/couponValue", method = RequestMethod.GET)
+	public String couponValue() {
+		return "transactional/couponValue";
+	}
+	
+	@RequestMapping(value = "/userRequestsReply", method = RequestMethod.GET)
+	public String userRequestsReply() {
+		return "transactional/userRequestsReply";
+	}
+	
+	@RequestMapping(value = "/referalDetails", method = RequestMethod.GET)
+	public String referalDetails() {
+		return "transactional/referalDetails";
+	}
+	
+	
+	
+	
 }

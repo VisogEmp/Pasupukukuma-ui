@@ -10,7 +10,7 @@ app
 					$scope.stateForm = {
 					 id : -1,
 						name : "",
-						country_id :""
+						country :""
 				
 					};
 
@@ -79,7 +79,7 @@ app
 					$scope.editState = function(state) {
 
 						$scope.stateForm.name = state.name;
-						$scope.stateForm.country_id = state.country;
+						$scope.stateForm.country = state.country;
 					
 						$scope.stateForm.id = state.id;
 					};

@@ -28,57 +28,50 @@ $(document).ready(function(e){
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 
  <script>
-	var app = angular.module("AddressManagement", []);
+	var app = angular.module("PujaOrderDetailsManagement", []);
 
 	//Controller Part
 	app
 			.controller(
-					"AddressController",
+					"PujaOrderDetailsController",
 					function($scope, $http) {
 
-						$scope.address = [];
-						$scope.addressForm = {
+						$scope.PujaOrderDetails = [];
+						$scope.pujaOrderDetailsForm = {
 							// id : -1,
-								addressLine1 : "",
-								addressLine2 : "",
-								zipcode : "",
-								state : "",
-								user : "",
-								city : "",
-								country : ""
+								pujaOrder : "",
+								pujaSamagri : ""
+								
+								
 								
 						};
 
 						// Now load the data from server
-						_refreshAddressData();
+						_refreshPujaOrderDetailsData();
 
 						// HTTP POST/PUT methods for add/edit role
 						// with the help of id, we are going to find out whether it
 						// is put or post operation
 
-						$scope.submitAddress = function() {
+						$scope.submitPujaOrderDetails = function() {
 
 							var method = "";
 							var url = "";
 							// alert($scope.genderForm.id);
-							if ($scope.addressForm.id == -1
-									|| $scope.addressForm.id == undefined) {
+							if ($scope.pujaOrderDetailsForm.id == -1
+									|| $scope.pujaOrderDetailsForm.id == undefined) {
 								// Id is absent in form data, it is create new role
 								// operation
 
 								method = "POST";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/';
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/pujaorderdetails/';
 								$http
 										.post(
 												url,
 												{
-													"addressLine1" : $scope.addressForm.addressLine1,
-													"addressLine2" : $scope.addressForm.addressLine2,
-													"zipcode" : $scope.addressForm.zipcode,
-													"state" : $scope.addressForm.state,
-													"user" : $scope.addressForm.user,
-													"city" : $scope.addressForm.city,
-													"country" : $scope.addressForm.country
+													"pujaOrder" : $scope.pujaOrderDetailsForm.pujaOrder,
+													"pujaSamagri" : $scope.pujaOrderDetailsForm.pujaSamagri,
+
 
 													
 												}).then(_success, _error);
@@ -87,25 +80,21 @@ $(document).ready(function(e){
 
 								// Id is present in form data, it is edit role
 								// operation
-								id = $scope.addressForm.id;
+								id = $scope.pujaOrderDetailsForm.id;
 								
 								method = "PUT";
-								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
+								url = 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/pujaorderdetails/'
 										+ id;
 								$http
 										.put(
 												url,
 												{
-													"addressLine1" : $scope.addressForm.addressLine1,
-													"addressLine2" : $scope.addressForm.addressLine2,
-													"zipcode" : $scope.addressForm.zipcode,
-													"state" : $scope.addressForm.state,
-													"user" : $scope.addressForm.user,
-													"city" : $scope.addressForm.city,
-													"country" : $scope.addressForm.country
+													"pujaOrder" : $scope.pujaOrderDetailsForm.pujaOrder,
+													"pujaSamagri" : $scope.pujaOrderDetailsForm.pujaSamagri,
+													
 
 												}).then(_success, _error);
-								$scope.addressForm.id = -1;
+								$scope.pujaOrderDetailsForm.id = -1;
 							}
 							/*
 							 * $http({ method : method, url : url, data :
@@ -116,26 +105,22 @@ $(document).ready(function(e){
 						};
 
 						// HTTP DELETE- delete role by Id
-						$scope.deleteAddress = function(address) {
+						$scope.deletePujaOrderDetails = function(pujaOrderDetails) {
 							$http(
 									{
 										method : 'DELETE',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
-												+ address.id
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/pujaorderdetails/'
+												+ pujaOrderDetails.id
 									}).then(_success, _error);
 						};
 
 						// In case of edit, populate form fields and assign form.id
 						// with role id
-						$scope.editAddress = function(address) {
+						$scope.editPujaOrderDetails = function(pujaOrderDetails) {
 
-							$scope.addressForm.addressLine1 = address.addressLine1;
-							$scope.addressForm.addressLine2 = address.addressLine2;
-							$scope.addressForm.zipcode = address.zipcode;
-							$scope.addressForm.state = address.state;
-							$scope.addressForm.user = address.user;
-							$scope.addressForm.city = address.city;
-							$scope.addressForm.country = address.country;
+							$scope.pujaOrderDetailsForm.pujaOrder = pujaOrderDetails.pujaOrder;
+							$scope.pujaOrderDetailsForm.pujaSamagri = pujaOrderDetails.pujaSamagri;
+							
 							
 							
 							
@@ -143,14 +128,14 @@ $(document).ready(function(e){
 
 						/* Private Methods */
 						// HTTP GET- get all countries collection
-						function _refreshAddressData() {
+						function _refreshPujaOrderDetailsData() {
 							$http(
 									{
 										method : 'GET',
-										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/address/'
+										url : 'http://localhost:8080/Pasupu-Kumkuma-Api/transactional/pujaorderdetails/'
 									}).then(function successCallback(response) {
 								// alert(response.data.data)
-								$scope.addresss = response.data.data;
+								$scope.pujaOrderDetailss = response.data.data;
 							}, function errorCallback(response) {
 								console.log(response.statusText);
 							});
@@ -158,7 +143,7 @@ $(document).ready(function(e){
 
 						function _success(response) {
 
-							_refreshAddressData();
+							_refreshPujaOrderDetailsData();
 							_clearFormData()
 						}
 
@@ -170,14 +155,10 @@ $(document).ready(function(e){
 						// Clear the form
 						function _clearFormData() {
 							// $scope.genderForm.id = -1;
-							$scope.addressForm.addressLine1 = "";
-							$scope.addressForm.addressLine2 = "";
-							$scope.addressForm.zipcode = "";
-							$scope.addressForm.state = "";
-							$scope.addressForm.user = "";							
-							$scope.addressForm.city = "";							
-							$scope.addressForm.country = "";
-
+							$scope.pujaOrderDetails.pujaOrder = "";
+							$scope.pujaOrderDetails.pujaSamagri = "";
+														
+							
 						}
 						;
 					});
@@ -312,49 +293,28 @@ td, th {
 				<li><a href="/Pasupu-Kumkuma-Ui/user">login</a></li>
 			</ul>
 		</div>
-<div class="content" ng-app="AddressManagement" ng-controller="AddressController">
-	<h1>Address Transaction</h1>
-	<form ng-submit="submitAddress()">
+<div class="content" ng-app="PujaOrderDetailsManagement" ng-controller="PujaOrderDetailsController">
+	<h1>pujaOrderDetails Transaction</h1>
+	<form ng-submit="submitPujaOrderDetails()">
 		<table>
 
 			<tr>
-				<th colspan="2">Add/Edit Address</th>
+				<th colspan="2">Add/Edit PujaOrderDetails</th>
+			</tr>
+			
+			
+			<tr>
+				<td>PujaOrder</td>
+				<td><input type="text" ng-model="pujaOrderDetailsForm.pujaOrder" /></td>
 			</tr>
 			<tr>
 			
-			
-				<td>Address Line1</td>
-				<td><input type="text" ng-model="addressForm.addressLine1" /></td>
-			</tr>
-			<tr>
-				<td>Address Line2</td>
-				<td><input type="text" ng-model="addressForm.addressLine2" /></td>
-			</tr>
-			
-			<tr>
-				<td>ZipCode</td>
-				<td><input type="text" ng-model="addressForm.zipcode" /></td>
-			</tr>
-			<tr>
-				<td>State</td>
-				<td><input type="text" ng-model="addressForm.state" /></td>
-			</tr>
-			
-			<tr>
-				<td>User</td>
-				<td><input type="text" ng-model="addressForm.user" /></td>
-			</tr>
-			<tr>
-				<td>City</td>
-				<td><input type="text" ng-model="addressForm.city" /></td>
+				<td>PujaSamagri</td>
+				<td><input type="text" ng-model="pujaOrderDetailsForm.pujaSamagri" /></td>
 			</tr>
 			
 			
 			
-			<tr>
-				<td>Country</td>
-				<td><input type="text" ng-model="addressForm.country" /></td>
-			</tr>
 			
 			
 			
@@ -368,35 +328,22 @@ td, th {
 	<table>
 		<tr>
 
-			<th>Address Line1</th>
-			<th>Address Line2</th>
-			<th>ZipCode</th>
-			<th>State</th>
-			<th>User</th>
-			<th>City</th>
-			<th>Country</th>
-			
+			<th>PujaOrder</th>
+			<th>PujaSamagri</th>
+						
 			<th></th>
 
 		</tr>
 
-		<tr ng-repeat="address in addresss">
+		<tr ng-repeat="pujaOrderDetails in pujaOrderDetailss">
 
-						<td>{{ address.addressLine1 }}</td>
+						<td>{{ pujaOrderDetails.pujaOrder }}</td>
 						
-						<td>{{ address.addressLine2 }}</td>
+						<td>{{ pujaOrderDetails.pujaSamagri }}</td>
 			
-						<td>{{ address.zipcode }}</td>
 						
-						<td>{{ address.state }}</td>
-						
-						<td>{{ address.users }}</td>
 			
-						<td>{{ address.city }}</td>
-							
-						<td>{{ address.country }}</td>
-			
-			<td><a ng-click="editAddress(address)" class="blue-button">Edit</a>	| <a ng-click="deleteAddress(address)" onclick="deleteAddress(address)" class="red-button">Delete</a></td>
+			<td><a ng-click="editPujaOrderDetails(pujaOrderDetails)" class="blue-button">Edit</a>	| <a ng-click="deletePujaOrderDetails(pujaOrderDetails)" onclick="deletePujaOrderDetails(pujaOrderDetails)" class="red-button">Delete</a></td>
 		</tr>
 
 	</table>
